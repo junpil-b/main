@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <link rel="stylesheet" href="beautyfoam_join.css">
+
+   <title>뷰티폼: 회원가입</title>
+</head>
+
+<body>
+   <div id=join_box>
+      <span>Beautyfo:am</span>
+      <form action="beautyfoam.html" method="post">
+         <ul id="join_valid">
+            <li><input type=text id=join_id placeholder="아이디를 입력하세요.(필수)"></li><br>
+            <li><input type=password id=join_pw placeholder="비밀번호를 입력하세요.(필수)"></li><br>
+            <li><input type=password id=join_pw2 placeholder="비밀번호를 다시 입력하세요.(필수)"></li><br>
+            <li><input type=text id=join_name placeholder="이름을 입력하세요.(필수)"></li><br>
+            <li><input type=email id=join_mail placeholder="메일을 입력하세요.(선택)"></li><br>
+            <li><button type=button id="join_btn" onclick="join()">회원가입</button>
+         </ul>
+         <ul id="join_menu">
+            <li><a href="">이용약관</a></li>
+            <li><a href="">개인정보처리방침</a></li>
+            <li><a href="">운영정책</a></li>
+            <li><a href="">공지사항</a></li>
+            <li><a href="">고객센터</a></li>
+         </ul>
+         <p id="join_menu2">Copyright <b>Beautyfo:am</b> Corp. All Rights Reserved.</p>
+      </form>
+   </div>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="beautyfoam_join.js"></script>
+</body>
+
+</html>

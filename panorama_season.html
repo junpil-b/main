@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2. 사계절</title>
+
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="192x192" href="panoimg/favicon.png">
+
+    <!-- 폰트어썸 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <style>
+        body{
+            background-color: black;
+        }
+
+        .container {
+            margin-top: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .season_box {
+            width: 450px;
+            height: 700px;
+            margin-left: 30px;
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        /* 사계절 이름 (봄 ~ 겨울) */
+        .season_box h1 {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0;
+            transition: all 0.5s;
+            letter-spacing: 3px;
+            top: 0px;
+        }
+
+        .spring:hover h1 {
+            top: 110px;
+            opacity: 1;
+            color: rgba(247, 162, 178, 0.5);
+            text-shadow: 0px 0px 20px rgb(247, 162, 177);
+        }
+
+        .summer:hover h1 {
+            top: 110px;
+            opacity: 1;
+            color: rgba(13, 149, 240, 0.5);
+            text-shadow: 0px 0px 20px rgb(13, 149, 240);
+        }
+
+        .fall:hover h1 {
+            position: absolute;
+            z-index: 5;
+            top: 110px;
+            opacity: 1;
+            color: rgba(233, 118, 11, 0.5);
+            text-shadow: 0px 0px 20px rgb(233, 118, 11);
+        }
+
+        .winter:hover h1 {
+            position: absolute;
+            z-index: 5;
+            top: 110px;
+            opacity: 1;
+            color: rgba(128, 128, 128);
+            text-shadow: 0px 0px 20px white;
+        }
+
+        /* 사계절 봄 */
+        .spring {
+            margin-left: 0;
+            background-color: rgb(247, 162, 177);
+            overflow: hidden;
+        }
+
+        /* 사계절 여름 */
+        .summer {
+            background-color: #1f3346;
+            overflow: hidden;
+        }
+
+        /* 사계절 가을 */
+        .fall {
+            background-color: rgb(247, 163, 84);
+            overflow: hidden;
+        }
+
+        /* 사계절 겨울 */
+        .winter {
+            background-color: black;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- 봄 -->
+        <div class="season_box spring">
+            <h1>봄</h1>
+            <canvas></canvas>
+        </div>
+
+        <!-- 여름 -->
+        <div class="season_box summer">
+            <h1>여름</h1>
+            <canvas></canvas>
+        </div>
+
+        <!-- 가을 -->
+        <div class="season_box fall">
+            <h1>가을</h1>
+            <canvas></canvas>
+        </div>
+
+        <!-- 겨울 -->
+        <div class="season_box winter">
+            <h1>겨울</h1>
+            <canvas></canvas>
+        </div>
+    </div>
+
+
+    <script>
+        // 봄 ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+        // 캔버스 사용 기본 설정
+        const spring_canvas = document.querySelector('.spring canvas');
+        const srping_ctx = spring_canvas.getContext('2d');
+
+        // 캔버스의 크기는 브라우저의 크기로 설정
+        spring_canvas.width = window.innerWidth;
+        spring_canvas.height = window.innerHeight;
+
+        // 벚꽃 개수
+        const spring_total = 300;
+        const petalArray = [];
+
+        // 벚꽃 이미지 불러오기
+        const petalImg = new Image();
+        petalImg.src = 'panoimg/petal.png';
+        petalImg.onload = () => {
+            for (let i = 0; i < spring_total; i++) {
+
+                // 배열에 넣기
+                petalArray.push(new Petal());
+            }
+            springRender();
+        };
+
+        function springRender() {
+            // x,y 0,0에서 브라우저 크기만큼 캔버스에 요소를 그리고 지우기 반복
+            srping_ctx.clearRect(0, 0, spring_canvas.width, spring_canvas.height);
+            petalArray.forEach(petal => {
+                petal.springAnimate();
+            })
+            window.requestAnimationFrame(springRender);
+        };
+
+        // 벚꽃
+        class Petal {
+            constructor() {
+
+                // 벚꽃의 위치를 랜덤으로 설정
+                this.x = Math.random() * spring_canvas.width;
+                this.y = Math.random() * spring_canvas.height * 2 - spring_canvas.height;
+
+                // 벚꽃의 크기를 기본값에서 랜덤으로 설정
+                // 기본 20px에 5~35px 사이의 크기로 랜덤하게 생성
+                this.w = 20 + Math.random() * 15;
+                this.h = 10 + Math.random() * 10;
+
+                // 벚꽃의 움직임 속도를 랜덤하게 설정
+                // x 속도를 2~3 사이로 설정
+                this.xSpeed = 2 + Math.random();
+                this.ySpeed = 1 + Math.random();
+                this.flip = Math.random();
+                this.flipSpeed = Math.random() * 0.03;
+            }
+
+            springDraw() {
+                // this.y -> 벚꽃의 높이(위치)
+                // 벚꽃의 높이나 너비가 브라우저를 벗어나면 다시 왼쪽에서 생성
+                if (this.y > spring_canvas.height || this.x > spring_canvas.width) {
+                    this.x = -petalImg.width;
+                    this.y = Math.random() * spring_canvas.height * 2 - spring_canvas.height;
+                    this.flip = Math.random();
+                }
+
+                srping_ctx.drawImage(
+                    petalImg,
+                    this.x,
+                    this.y,
+
+                    // abs -> 절대값
+                    this.w * (0.5 + (Math.abs(Math.cos(this.flip)) / 3)),
+                    this.h * (0.7 + (Math.abs(Math.sin(this.flip)) / 2))
+                )
+            }
+
+            // 움직임
+            springAnimate() {
+                this.x += this.xSpeed;
+                this.y += this.ySpeed;
+                this.springDraw();
+                this.flip += this.flipSpeed;
+            }
+        };
+
+        window.addEventListener('resize', () => {
+            spring_canvas.width = window.innerWidth
+            spring_canvas.height = window.innerHeight
+        })
+
+
+
+        // 여름 ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+        const summer_canvas = document.querySelector('.summer canvas');
+        const summer_ctx = summer_canvas.getContext('2d');
+
+        // 최소~최대값 사이 난수 생성
+        const summerRandom = (min, max) => {
+            return Math.random() * (max - min + 1) + min;
+        }
+
+        // 비 개수
+        let summer_total;
+        let rains = [];
+        let drops = []
+
+        // 빗줄기
+        class Rain {
+            constructor(x, y, velo) {
+                this.x = x;
+                this.y = y;
+                this.velo = velo;
+            }
+
+            summerDraw() {
+                const { x, y, velo } = this
+
+                // 선 긋기 기본 설정
+                summer_ctx.beginPath();
+                summer_ctx.moveTo(x, y);
+                summer_ctx.lineTo(x + velo.x, y + velo.y * 2);
+                summer_ctx.strokeStyle = '#808080'
+                summer_ctx.stroke();
+            }
+
+            // 튀는 빗방울
+            splash() {
+                for (let i = 0; i < 3; i++) {
+                    const velo = {
+                        x: -this.velo.x + summerRandom(-2, 1),
+                        y: -this.velo.y + summerRandom(1, 3)
+                    }
+                    drops.push(new Drop(this.x, innerHeight - 270, velo))
+                }
+            }
+
+            summerAnimate() {
+                if (this.y > innerHeight - 270) {
+                    this.splash();
+                    this.x = summerRandom(0, innerWidth)
+                    this.y = -20
+                }
+
+                this.x += this.velo.x;
+                this.y += this.velo.y;
+                this.summerDraw()
+            }
+        }
+
+
+        // 튀는 빗방울
+        class Drop {
+            constructor(x, y, velo) {
+                this.x = x
+                this.y = y
+                this.velo = velo;
+                this.gravity = 3
+            }
+
+            summerDraw() {
+                summer_ctx.beginPath()
+                summer_ctx.arc(this.x, this.y, 1, 0, Math.PI * 2)
+                summer_ctx.fillStyle = '#8899a6'
+                summer_ctx.fill()
+            }
+
+            summerAnimate() {
+                this.velo.y += this.gravity
+                this.x += this.velo.x
+                this.y += this.velo.y
+
+                this.summerDraw()
+            }
+        }
+
+        // 초기화
+        function summerInit() {
+            summer_canvas.width = innerWidth;
+            summer_canvas.height = innerHeight - 270;
+
+            summer_total = 1500;
+            rains = [];
+            drops = [];
+
+            for (let i = 0; i < summer_total; i++) {
+                const x = summerRandom(0, innerWidth);
+                const y = summerRandom(0, innerHeight - 270);
+                const velo = {
+                    x: summerRandom(-1, 1),
+                    y: summerRandom(5, 10)
+                }
+
+                rains.push(new Rain(x, y, velo))
+            }
+
+        }
+
+        // 렌더 함수
+        function summerRender() {
+            summer_ctx.clearRect(0, 0, summer_canvas.width, summer_canvas.height);
+            rains.forEach(rain => rain.summerAnimate());
+            drops.forEach((drop, index) => {
+                drop.summerAnimate()
+
+                // 빗방울이 바닥에 닿으면 배열에서 제거
+                // cpu 관련
+                if (drop.y > innerHeight - 270) drops.splice(index, 1)
+            })
+
+            window.requestAnimationFrame(summerRender);
+        }
+
+        summerInit();
+        summerRender();
+
+        window.addEventListener('resize', () => summerInit())
+
+        // 가을 ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+        // 벚꽃과 동일
+        const fall_canvas = document.querySelector('.fall canvas');
+        const fall_ctx = fall_canvas.getContext('2d');
+
+        fall_canvas.width = window.innerWidth;
+        fall_canvas.height = window.innerHeight;
+
+        // 낙엽 개수
+        const fall_total = 150;
+        const leafArray = [];
+
+        // 낙엽 이미지 불러오기
+        const leafImg = new Image();
+        leafImg.src = 'panoimg/leaves.png';
+        leafImg.onload = () => {
+            for (let i = 0; i < fall_total; i++) {
+                leafArray.push(new Leaf());
+            }
+            fallRender();
+        };
+
+        function fallRender() {
+            fall_ctx.clearRect(0, 0, fall_canvas.width, fall_canvas.height);
+            leafArray.forEach(leaf => {
+                leaf.fallAnimate();
+            })
+
+            window.requestAnimationFrame(fallRender);
+        };
+
+        // 낙엽
+        class Leaf {
+            constructor() {
+                this.x = Math.random() * fall_canvas.width;
+                this.y = Math.random() * fall_canvas.height * 2 - fall_canvas.height;
+
+                this.w = 20 + Math.random() * 15;
+                this.h = 10 + Math.random() * 10;
+
+                this.xSpeed = 3 + Math.random();
+                this.ySpeed = 3 + Math.random() * 0.5;
+                this.flip = Math.random();
+                this.flipSpeed = Math.random() * 0.03;
+            }
+
+            fallDraw() {
+                if (this.y > fall_canvas.height || this.x > fall_canvas.width) {
+                    this.x = -leafImg.width;
+                    this.y = Math.random() * fall_canvas.height * 2 - fall_canvas.height;
+                    this.flip = Math.random();
+                }
+
+                fall_ctx.drawImage(
+                    leafImg,
+                    this.x,
+                    this.y,
+
+                    this.w * (1.5 + (Math.abs(Math.cos(this.flip)) / 3)),
+                    this.h * (3 + (Math.abs(Math.sin(this.flip)) / 2))
+                )
+            }
+
+            fallAnimate() {
+                this.x += this.xSpeed;
+                this.y += this.ySpeed;
+                this.fallDraw();
+                this.flip += this.flipSpeed;
+            }
+        };
+
+        window.addEventListener('resize', () => {
+            fall_canvas.width = window.innerWidth
+            fall_canvas.height = window.innerHeight
+        })
+
+
+
+
+
+        // 겨울 ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+        const winter_canvas = document.querySelector('.winter canvas');
+        const winter_ctx = winter_canvas.getContext('2d');
+
+        const winterRandom = (min, max) => {
+            return Math.random() * (max - min + 1) + min;
+        }
+
+        // 눈 개수
+        let winter_total;
+        let snows = [];
+
+        class Snow {
+            constructor(x, y, velocity) {
+                this.x = x;
+                this.y = y;
+                this.velocity = velocity;
+            }
+
+            winterDraw() {
+                const { x, y, velocity } = this
+
+                winter_ctx.beginPath();
+                winter_ctx.arc(x, y, 5, 0, Math.PI * 2);
+                winter_ctx.fillStyle = "white";
+                winter_ctx.globalAlpha = 0.3;
+                winter_ctx.fill();
+                winter_ctx.stroke();
+            }
+
+            winterAnimate() {
+                if (this.y > innerHeight - 270) {
+                    this.x = winterRandom(0, innerWidth)
+                    this.y = -20
+                }
+
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.winterDraw()
+            }
+        }
+
+        class Flake {
+            constructor(x, y, velocity) {
+                this.x = x
+                this.y = y
+                this.velocity = velocity;
+            }
+
+            winterDraw() {
+                winter_ctx.beginPath()
+                winter_ctx.arc(this.x, this.y, 1, 0, Math.PI * 2)
+                winter_ctx.fillStyle = '#8899a6'
+                winter_ctx.fill()
+
+            }
+
+            winterAnimate() {
+                this.velocity.y += this.gravity
+                this.x += this.velocity.x
+                this.y += this.velocity.y
+
+                this.winterDraw()
+            }
+        }
+
+        // 초기화
+        function winterInit() {
+            winter_canvas.width = innerWidth;
+            winter_canvas.height = innerHeight - 270;
+
+            winter_total = 1500;
+            snows = [];
+            windrops = [];
+
+            for (let i = 0; i < winter_total; i++) {
+                const x = winterRandom(0, innerWidth);
+                const y = winterRandom(0, innerHeight - 270);
+                const velocity = {
+                    x: winterRandom(-1, 1),
+                    y: winterRandom(1, 3)
+
+                }
+
+                snows.push(new Snow(x, y, velocity))
+            }
+
+        }
+
+        // 렌더 함수
+        function winterRender() {
+            winter_ctx.clearRect(0, 0, winter_canvas.width, winter_canvas.height);
+            snows.forEach(rain => rain.winterAnimate());
+            windrops.forEach((drop, index) => {
+                drop.winterAnimate()
+
+                if (drop.y > innerHeight - 270) windrops.splice(index, 1)
+            })
+
+            window.requestAnimationFrame(winterRender);
+        }
+
+        winterInit();
+        winterRender();
+
+        window.addEventListener('resize', () => winterInit())
+    </script>
+</body>
+
+</html>

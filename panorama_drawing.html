@@ -1,0 +1,167 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="192x192" href="panoimg/favicon.png">
+
+    <title>4. 그림판</title>
+
+    <style>
+        body {
+            background-color: black;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* 전체 영역 */
+        .container {
+            width: 80%;
+            display: flex;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* 그림판 영역 */
+        .drawing_board {
+            width: 1400px;
+            height: 800px;
+            background-color: white;
+            border-radius: 0 30px 30px 0;
+            margin: 0 auto;
+        }
+
+        /* 색상 보드 */
+        .drawing_menu {
+            width: 10%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px 0 0 30px;
+        }
+
+        .drawing_color {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 27px;
+        }
+
+        /* 선 굵기 */
+        .drawing_range {
+            width: 50%;
+            margin: 910px auto;
+        }
+
+        input {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 전체 영역 -->
+    <div class="container">
+
+        <!-- 색상 보드 -->
+        <div class="drawing_menu">
+            <div class="drawing_colors" id="drawingColor">
+                <div class="drawing_color" style="background-color: white;"></div>
+                <div class="drawing_color" style="background-color: black;"></div>
+                <div class="drawing_color" style="background-color: grey;"></div>
+                <div class="drawing_color" style="background-color: red;"></div>
+                <div class="drawing_color" style="background-color: orange;"></div>
+                <div class="drawing_color" style="background-color: yellow;"></div>
+                <div class="drawing_color" style="background-color: green;"></div>
+                <div class="drawing_color" style="background-color: blue;"></div>
+                <div class="drawing_color" style="background-color: blueviolet;"></div>
+                <div class="drawing_color" style="background-color: purple;"></div>
+            </div>
+        </div>
+
+        <!-- 그림판 영역 -->
+        <canvas id="drawingBoard" class="drawing_board"></canvas>
+    </div>
+
+    <!-- 선 굵기 -->
+    <div class="drawing_range">
+        <input type="range" id="drawingRange" min="0.1" max="5.0" value="2.5" step="0.1" />
+    </div>
+
+
+    <script>
+        const canvas = document.querySelector(".drawing_board");
+        const ctx = canvas.getContext("2d");
+
+        const colors = document.querySelectorAll(".drawing_color");
+        const range = document.getElementById("drawingRange");
+
+        const INITIAL_COLOR = "black";
+        const CANVAS_WIDTH = 1400;
+        const CANVAS_HEIGHT = 800;
+
+        canvas.width = CANVAS_WIDTH;
+        canvas.height = CANVAS_HEIGHT;
+
+        let painting = false;
+
+        function startPainting() {
+            painting = true;
+        }
+
+        function stopPainting() {
+            painting = false;
+        }
+
+        // 그리기
+        function onMouseMove(event) {
+            const x = event.offsetX;
+            const y = event.offsetY;
+            if (!painting) {
+                ctx.beginPath();  
+                ctx.moveTo(x, y); //선 시작 위치
+            } else {
+                ctx.lineTo(x, y);  
+                ctx.stroke(); //선 그리기
+            }
+        }
+
+        // 색상 선택
+        function handleColorClick(event) {
+            const color = event.target.style.backgroundColor;
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+        }
+
+        // 선 굵기 선택
+        function handleRangeChange(event) {
+            const size = event.target.value;
+            ctx.lineWidth = size;
+        }
+
+        if (canvas) {
+            canvas.addEventListener("mousemove", onMouseMove);
+            canvas.addEventListener("mousedown", startPainting);
+            canvas.addEventListener("mouseup", stopPainting);
+            canvas.addEventListener("mouseleave", stopPainting);
+        }
+
+        Array.from(colors).forEach(color => color.addEventListener("click", handleColorClick));
+
+        if (range) {
+            range.addEventListener("input", handleRangeChange);
+        }
+
+    </script>
+
+    </script>
+</body>
+
+</html>

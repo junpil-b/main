@@ -1,0 +1,149 @@
+  /* 미스트/오일 내용 박스 */
+  #mist_wrap {
+   width: 50%;
+   height: auto;
+   margin: 0 auto;
+}
+
+/* 미스트/오일 텍스트 */
+#mist_wrap span {
+   font-size: 20px;
+}
+
+#item_count {
+   font-size: 13px;
+   background: transparent; /* 배경 제거 */
+   color: rgba(0, 0, 0, 0.5);
+}
+
+/* 전체 ~ 페이스오일 */
+.mist_category {
+   width: 100%;
+   height: 35px;
+   margin: 0 auto;
+}
+
+.mist_category ul {
+   display: flex;
+   padding: 0;
+}
+
+.mist_category li {
+   text-align: center;
+   width: 100px;
+   height: 30px;
+   background: transparent;
+   border: 1px solid rgba(0, 0, 0, 0.5);
+   margin-left: 10px;
+}
+
+.mist_category li:first-child {
+   margin-left: 0;
+}
+
+.mist_category a {
+   line-height: 30px;
+   color: rgba(0, 0, 0, 0.5);
+   font-weight: bold;
+   font-size: 13px;
+}
+
+.mist_category li:hover {
+   border: 2px solid #7dac26;
+}
+
+.mist_category li:hover a {
+   color: #7dac26;
+}
+
+
+/* 체크박스 전체 박스 */
+#mist_check_box {
+   width: 100%;
+   height: 83px;
+   border-top: 3px solid #7dac26;
+   border-left: 1px solid rgba(0, 0, 0, 0.1);
+   border-right: 1px solid rgba(0, 0, 0, 0.1);
+   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+   display: flex;
+   justify-content: space-between;
+}
+
+/* 브랜드 텍스트 영역 */
+#mist_check_left {
+   width: 20%;
+   border-right: 3px solid rgba(0, 0, 0, 0.3);
+   padding: 5px;
+}
+
+#mist_check_left span {
+   font-size: 16px;
+   font-weight: bold;
+   color: #7dac26;
+}
+
+/* 체크박스 */
+#mist_check_right {
+   width: 100%;
+   margin-top: 5px;
+   margin-left: 10px;
+   color: grey;
+   font-size: 14px;
+}
+
+#mist_check_right label {
+   width: 115px;
+   height: 25px;
+   display: inline-block;
+   margin-right: 10px;
+}
+
+/* 인기순 ~ 높은가격순 */
+#mist_align {
+   height: 40px;
+   border-top: 3px solid rgba(0, 0, 0, 0.3);
+   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+#mist_align button {
+   padding: 10px;
+   border: none;
+   background: transparent;
+   font-weight: bold;
+   cursor: pointer;
+}
+
+#mist_align button::after {
+   content: "|";
+   margin-left: 15px;
+   color: rgba(0, 0, 0, 0.3);
+}
+
+#mist_align button:last-child::after {
+   content: "";
+}
+
+/* 미스트 전제 상품 */
+#mist_item_all ul {
+   display: flex;
+   padding: 0;
+   margin: 0;
+   flex-wrap: wrap;
+}
+
+#mist_item_all li {
+   width: 235px;
+   height: 400px;
+}
+
+#mist_item_all img {
+   width: 200px;
+   height: 200px;
+   padding: 10px;
+}
+
+#mist_item_all p {
+   text-align: center;
+   width: 80%;
+   margin: 0 auto;
+}

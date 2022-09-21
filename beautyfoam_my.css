@@ -1,0 +1,123 @@
+ /* 마이페이지 내용 박스 */
+ #my_wrap {
+   width: 50%;
+   height: 500px;
+   margin: 0 auto;
+   display: flex;
+   justify-content: space-between;
+}
+
+/* 장바구니 ~ 회원탈퇴 */
+#my_left {
+   width: 20%;
+}
+
+#my_left ul {
+   margin-top: -1px;
+   padding: 0;
+}
+
+#my_left li {
+   padding: 8px;
+   border: 1px solid rgba(0, 0, 0, 0.1);
+   font-size: 13px;
+   cursor: pointer;
+}
+
+#my_left li:first-child {
+   border-top: none;
+}
+
+/* 상품문의 ~ 관심상품 */
+#my_right {
+   width: 75%;
+   height: 405px;
+}
+
+#my_right span {
+   color: black;
+   font-weight: bold;
+   border-bottom: 1px solid black;
+   margin-left: 5px;
+   cursor: pointer;
+}
+
+
+/* 주문내역 ~ 상품문의 */
+#my_right_1 {
+   margin-top: 15px;
+   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#my_right_1 ul {
+   margin-top: 0;
+   padding: 0;
+   display: flex;
+   flex-wrap: wrap; /* 상위 요소의 너비보다 클 때 다음 줄로 정렬 */
+}
+
+#my_right_1 li {
+   display: block;
+   width: 155px;
+   padding: 10px;
+   margin-top: 10px;
+   font-size: 13px;
+   color: grey;
+}
+
+/* n */
+#my_right i {
+   font-size: 10px;
+   color: orange;
+}
+
+#span_new::after {
+   content: 'N';
+   font-size: 10px;
+   position: relative;
+   top: -10px;
+   left: 1px;
+   color: orange;
+}
+
+/* 상품문의 ~ 관심상품 */
+#my_right_2 {
+   width: 710px;
+   height: 300px;
+   margin: 30px auto;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+}
+
+#my_right_2 div {
+   width: 340px;
+   height: 150px;
+}
+
+#my_right_2 h3 {
+   padding-bottom: 5px;
+   border-bottom: 3px solid black;
+}
+
+/* + */
+#my_right_2 i {
+   float: right;
+   font-size: 20px;
+   cursor: pointer;
+}
+
+#my_right_2 p {
+   padding-bottom: 10px;
+   border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+   color: grey;
+   font-size: 13px;
+}
+
+#item_new::after {
+   content: 'N';
+   font-size: 13px;
+   position: relative;
+   top: -15px;
+   color: orange;
+}

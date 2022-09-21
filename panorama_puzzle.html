@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3. 게임 이미지 퍼즐</title>
+
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="192x192" href="panoimg/favicon.png">
+
+    <!-- 폰트어썸 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .puzzle_wrap {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: -275px auto;
+            overflow-y: hidden;
+        }
+
+        .puzzle_start {
+            width: 100px;
+            height: 50px;
+            color: black;
+            position: absolute;
+            top: 885px;
+            right: 335px;
+            cursor: pointer;
+        }
+
+        .completed_text {
+            font-size: 50px;
+            position: absolute;
+            top: 730px;
+            right: 180px;
+            color: green;
+            display: none;
+        }
+
+        /* 이미지 퍼즐 ul */
+        .puzzle_box {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            margin-top: 280px;
+            list-style-type: none;
+            border: 1px solid white;
+            padding: 0;
+            width: 920px;
+            height: 920px;
+        }
+
+        li {
+            border: 1px solid white;
+            margin: 0 auto;
+            width: 230px;
+            height: 230px;
+            background: url("https://placeimg.com/920/920/any");
+        }
+
+        .list0 {
+            background-position-x: 0px;
+            background-position-y: 0px;
+        }
+
+        .list1 {
+            background-position-x: -230px;
+            background-position-y: 0px;
+        }
+
+        .list2 {
+            background-position-x: -460px;
+            background-position-y: 0px;
+        }
+
+        .list3 {
+            background-position-x: -690px;
+            background-position-y: 0px;
+        }
+
+        .list4 {
+            background-position-x: -0px;
+            background-position-y: -230px;
+        }
+
+        .list5 {
+            background-position-x: -230px;
+            background-position-y: -230px;
+        }
+
+        .list6 {
+            background-position-x: -460px;
+            background-position-y: -230px;
+        }
+
+        .list7 {
+            background-position-x: -690px;
+            background-position-y: -230px;
+        }
+
+        .list8 {
+            background-position-x: 0px;
+            background-position-y: -460px;
+        }
+
+        .list9 {
+            background-position-x: -230px;
+            background-position-y: -460px;
+        }
+
+        .list10 {
+            background-position-x: -460px;
+            background-position-y: -460px;
+        }
+
+        .list11 {
+            background-position-x: -690px;
+            background-position-y: -460px;
+        }
+
+        .list12 {
+            background-position-x: 0px;
+            background-position-y: -690px;
+        }
+
+        .list13 {
+            background-position-x: -230px;
+            background-position-y: -690px;
+        }
+
+        .list14 {
+            background-position-x: -460px;
+            background-position-y: -690px;
+        }
+
+        .list15 {
+            background-position-x: -690px;
+            background-position-y: -690px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 이미지 퍼즐 -->
+    <div class="puzzle_wrap">
+        <ul class="puzzle_box"></ul>
+        <button class="puzzle_start">Start</button>
+        <p class="completed_text">Completed</p>
+    </div>
+
+    <script>
+        // 게임 이미지퍼즐
+        var puzzle_wrap = document.querySelector('.puzzle_wrap');
+
+        const puzzle_box = document.querySelector('.puzzle_box');
+        const puzzle_start = document.querySelector('.puzzle_start');
+        const puzzle_restart = document.querySelector('.puzzle_start');
+        const completed_text = document.querySelector('.completed_text');
+        const puzzle_hint = document.querySelector('.puzzle_hint');
+        const tileCount = 16;
+
+        let tiles = [];
+        const dragged = {
+            el: null,
+            class: null,
+            index: null
+        };
+
+        let isPlaying = false;
+
+        // 무작위 셔플된 이미지 나열
+        function setGames() {
+            isPlaying = true;
+            tiles = createImageTiles();
+            tiles.forEach(tile => puzzle_box.appendChild(tile));
+            setTimeout(() => {
+                puzzle_box.innerHTML = "";
+                shuffle(tiles).forEach(tile => puzzle_box.appendChild(tile));
+            }, 5000);
+        }
+
+        // 랜덤 이미지 리스트에 넣기
+        function createImageTiles() {
+            const tempArray = [];
+            Array(tileCount).fill().forEach((_, i) => {
+                const li = document.createElement("li");
+                li.setAttribute("data-index", i);
+                li.setAttribute('draggable', 'true');
+                li.classList.add(`list${i}`);
+                tempArray.push(li);
+            });
+            return tempArray;
+        }
+
+        // 이미지 조각 셔플
+        function shuffle(array) {
+            let index = array.length - 1;
+            while (index > 0) {
+                const randomIndex = Math.floor(Math.random() * (index + 1));
+                [array[index], array[randomIndex]] = [array[randomIndex], array[index]];
+                index--;
+            }
+            return array;
+        }
+
+        // 이미지 위치 확인
+        function checkPlace() {
+            const currenList = [...puzzle_box.children];
+            const unMatchedList = currenList.filter((child, index) => Number(child.getAttribute("data-index")) !== index)
+
+            // 모든 조각들의 위치가 일치할 때
+            if (unMatchedList.length === 0) {
+                completed_text.style.display = "block"
+                puzzle_start.style.display = "block"
+                isPlaying = false;
+            }
+        }
+
+        // 드래그 기능
+        puzzle_box.addEventListener("dragstart", (e) => {
+            if (!isPlaying) return;
+            const obj = e.target;
+            dragged.el = obj;
+            dragged.class = obj.className;
+            dragged.index = [obj.parentNode.children].indexOf(obj);
+        })
+
+        puzzle_box.addEventListener("dragover", (e) => {
+            e.preventDefault();
+
+        })
+
+        puzzle_box.addEventListener("drop", (e) => {
+            if (!isPlaying) return;
+            const obj = e.target;
+
+            let originPlace;
+            let isLast = false;
+
+            if (dragged.el.nextSibling) {
+                originPlace = dragged.el.nextSibling;
+            } else {
+                originPlace = dragged.el.previousSibling;
+                isLast = true;
+            }
+
+            if (obj.className !== dragged.class) {
+                const droppedIndex = [obj.parentNode.children].indexOf(obj);
+                dragged.index > droppedIndex ? obj.before(dragged.el) : obj.after(dragged.el);
+                isLast ? originPlace.after(obj) : originPlace.before(obj);
+            }
+
+            checkPlace();
+        })
+
+        puzzle_start.addEventListener("click", () => {
+            puzzle_box.style.display = "grid";
+            puzzle_box.style.border = "none";
+            puzzle_start.style.display = "none";
+            setGames();
+        })
+
+    </script>
+</body>
+
+</html>

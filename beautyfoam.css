@@ -1,0 +1,567 @@
+ /* 슬라이드 박스 */
+ #slide_box {
+   width: 100%;
+   height: 550px;
+}
+
+.slide_item {
+   width: 100%;
+   height: 550px;
+   /* 슬라이드 이미지 위치 높이 */
+   display: flex;
+   justify-content: center;
+   /* 요소들을 컨테이너의 중앙으로 정렬 (가로/중심) */
+   align-items: center;
+   /* 컨테이너의 세로 축의 중앙으로 정렬. (세로/중심) */
+   position: absolute;
+   z-index: 0;
+   opacity: 0;
+   transition: all 1s ease-in-out;
+   overflow: hidden;
+}
+
+.slide_item img {
+   height: 550px;
+}
+
+/* 가상의 showing 클래스를 js로 생성 */
+.showing {
+   z-index: 1;
+   opacity: 1;
+}
+
+/* 인기상품 */
+#article_best_box {
+   width: 50%;
+   margin: 0 auto;
+   text-align: center;
+}
+
+/* best seller */
+#article_best_box span {
+   font-size: 35px;
+   color: #7dac26;
+   font-family: 'Nanum Brush Script', cursive;
+   font-style: italic;
+}
+
+#article_best_box p {
+   margin: 20px auto;
+   width: 100px;
+   font-size: 13px;
+   color: rgba(128, 128, 128);
+   font-family: 'Jua', sans-serif;
+}
+
+#article_best_box p:hover {
+   transform: scale(1.05);
+}
+
+#best_item ul {
+   display: flex;
+   padding: 0;
+   flex-wrap: wrap;
+   /* 상위 요소의 너비보다 하위 요소들의 총 너비가 더 크면 줄바꿈 정렬 */
+   justify-content: space-between;
+}
+
+#best_item li {
+   background: rgba(128, 128, 128, 0.1);
+   width: 200px;
+   height: 350px;
+   margin-top: 10px;
+}
+
+#best_item img {
+   width: 140px;
+   height: 140px;
+   margin-top: 20px;
+}
+
+#best_item img:hover {
+   transform: scale(1.05);
+}
+
+/* 신제품 */
+.article_new_box {
+   width: 100%;
+   margin: 0 auto;
+   text-align: center;
+}
+
+/* new product */
+.article_new_box span {
+   font-size: 35px;
+   color: #7dac26;
+   font-family: 'Nanum Brush Script', cursive;
+   font-style: italic;
+}
+
+/* 신제품 영역 */
+.new_item_wrap {
+   width: 100%;
+   height: 730px;
+   background: rgba(0, 0, 0, 0.05);
+}
+
+.new_item_btn {
+   width: 27%;
+   margin: 0 auto;
+   display: flex;
+   justify-content: space-between;
+}
+
+.new_item_btn button {
+   width: 100px;
+   height: 30px;
+   border: none;
+   background-color: transparent;
+   cursor: pointer;
+   transition: 500ms ease all;
+   margin-top: 50px;
+   font-size: 30px;
+   line-height: 30px;
+}
+
+.new_item_btn button:hover {
+   color: white;
+   border-radius: 5px;
+   box-shadow: -100px 0 0 0 rgba(0, 0, 0, 0.1) inset;
+}
+
+/* 신제품 오른쪽 이미지 영역 */
+.img_box {
+   width: 500px;
+   height: 550px;
+   margin: 0 auto;
+   overflow: hidden;
+   margin-left: 1000px;
+}
+
+.new_item_img {
+   width: 500px;
+   display: flex;
+   transition: all 1s ease-in-out;
+}
+
+.new_item_img img {
+   width: 500px;
+   height: 550px;
+}
+
+/* 신제품 왼쪽 텍스트 영역 */
+.text_box {
+   width: 280px;
+   margin-top: -430px;
+   margin-left: 600px;
+   overflow: hidden;
+   text-align: left;
+}
+
+/* 신제품 왼쪽 텍스트 영역 */
+.new_item_box {
+   width: 840px;
+   display: flex;
+   transition: all 1s ease-in-out;
+}
+
+.new_item_text {
+   width: 280px;
+}
+
+/* 추천 상품 */
+.article_rec_box {
+   width: 70%;
+   margin: 0 auto;
+   text-align: center;
+   position: relative;
+}
+
+/* highly recommended */
+.article_rec_box span {
+   font-size: 35px;
+   color: #7dac26;
+   font-family: 'Nanum Brush Script', cursive;
+   font-style: italic;
+}
+
+/* 스킨/로션 ~ 미스트/오일 */
+.rec_btn {
+   width: 70%;
+   margin: 0 auto;
+   display: flex;
+   justify-content: space-between;
+}
+
+.rec_btn button {
+   width: 180px;
+   height: 30px;
+   background: white;
+   border: none;
+   color: #7dac26;
+   font-size: 14px;
+   cursor: pointer;
+   position: relative;
+   z-index: 10;
+   border: 1px solid #7dac26;
+}
+
+.rec_btn button:hover {
+   color: white;
+   border: none;
+}
+
+.rec_btn button::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   z-index: -1;
+}
+
+.rec_btn button:hover::before {
+   background-color: #7dac26;
+   transform: scaleX(1);
+   transition: all 0.5s;
+   width: 180px;
+   height: 30px;
+}
+
+/* 추천 상품 1 */
+#rec_item_1 {
+   width: 70%;
+   margin: 0 auto;
+}
+
+#rec_item_1 ul {
+   display: flex;
+   padding: 0;
+   margin: 0;
+   flex-wrap: wrap;
+}
+
+#rec_item_1 li {
+   width: 250px;
+   height: 300px;
+   margin: 0 auto;
+   margin-top: 20px;
+}
+
+#rec_item_1 img {
+   width: 150px;
+   height: 150px;
+   padding: 10px;
+}
+
+#rec_item_1 p {
+   text-align: center;
+   margin: 0 auto;
+   width: 80%;
+}
+
+.brand {
+   font-size: 13px;
+   font-weight: bold;
+   color: grey;
+}
+
+.des {
+   font-size: 13px;
+   color: grey;
+}
+
+.price {
+   font-size: 20px;
+   font-weight: bold;
+   color: #7dac26;
+}
+
+.price::after {
+   content: "원";
+   font-size: 13px;
+}
+
+#rec_item_1 img:hover {
+   transform: scale(1.05);
+}
+
+#rec_item_1 p:hover {
+   transform: scale(1.05);
+}
+
+/* 추천 상품 2 */
+#rec_item_2 {
+   width: 70%;
+   margin: 0 auto;
+}
+
+#rec_item_2 ul {
+   display: flex;
+   padding: 0;
+   margin: 0;
+   flex-wrap: wrap;
+}
+
+#rec_item_2 li {
+   width: 250px;
+   height: 300px;
+   margin: 0 auto;
+   margin-top: 20px;
+}
+
+#rec_item_2 img {
+   width: 150px;
+   height: 150px;
+   padding: 10px;
+}
+
+#rec_item_2 p {
+   text-align: center;
+   margin: 0 auto;
+   width: 80%;
+}
+
+#rec_item_2 img:hover {
+   transform: scale(1.05);
+}
+
+#rec_item_2 p:hover {
+   transform: scale(1.05);
+}
+
+/* 추천 상품 3 */
+#rec_item_3 {
+   width: 70%;
+   margin: 0 auto;
+}
+
+#rec_item_3 ul {
+   display: flex;
+   padding: 0;
+   margin: 0;
+   flex-wrap: wrap;
+}
+
+#rec_item_3 li {
+   width: 250px;
+   height: 300px;
+   margin: 0 auto;
+   margin-top: 20px;
+}
+
+#rec_item_3 img {
+   width: 150px;
+   height: 150px;
+   padding: 10px;
+}
+
+#rec_item_3 p {
+   text-align: center;
+   margin: 0 auto;
+   width: 80%;
+}
+
+#rec_item_3 img:hover {
+   transform: scale(1.05);
+}
+
+#rec_item_3 p:hover {
+   transform: scale(1.05);
+}
+
+/* 추천 상품 4 */
+#rec_item_4 {
+   width: 70%;
+   margin: 0 auto;
+}
+
+#rec_item_4 ul {
+   display: flex;
+   padding: 0;
+   margin: 0;
+   flex-wrap: wrap;
+}
+
+#rec_item_4 li {
+   width: 250px;
+   height: 300px;
+   margin: 0 auto;
+   margin-top: 20px;
+}
+
+#rec_item_4 img {
+   width: 150px;
+   height: 150px;
+   padding: 10px;
+}
+
+#rec_item_4 p {
+   text-align: center;
+   margin: 0 auto;
+   width: 80%;
+}
+
+#rec_item_4 img:hover {
+   transform: scale(1.05);
+}
+
+#rec_item_4 p:hover {
+   transform: scale(1.05);
+}
+
+/* 추천 상품 5 */
+#rec_item_5 {
+   width: 70%;
+   margin: 0 auto;
+}
+
+#rec_item_5 ul {
+   display: flex;
+   padding: 0;
+   margin: 0;
+   flex-wrap: wrap;
+}
+
+#rec_item_5 li {
+   width: 250px;
+   height: 300px;
+   margin: 0 auto;
+   margin-top: 20px;
+}
+
+#rec_item_5 img {
+   width: 150px;
+   height: 150px;
+   padding: 10px;
+}
+
+#rec_item_5 p {
+   text-align: center;
+   margin: 0 auto;
+   width: 80%;
+}
+
+#rec_item_5 img:hover {
+   transform: scale(1.05);
+}
+
+#rec_item_5 p:hover {
+   transform: scale(1.05);
+}
+
+/* 리뷰 박스 */
+.article_review_box {
+   width: 70%;
+   margin: 0 auto;
+   text-align: center;
+}
+
+/* review */
+.article_review_box span {
+   font-size: 35px;
+   color: #7dac26;
+   font-family: 'Nanum Brush Script', cursive;
+   font-style: italic;
+}
+
+.review_wrap {
+   display: flex;
+   overflow: hidden;
+   width: 100%;
+   margin: 0 auto;
+   background: rgba(0, 0, 0, 0.03);
+}
+
+.review_slide {
+   display: flex;
+   justify-content: space-between;
+}
+
+.review_slide ul {
+   padding: 0;
+   display: flex;
+}
+
+.review_slide li {
+   width: 220px;
+}
+
+.review_slide li img {
+   width: 200px;
+   margin-left: 20px;
+}
+
+.review_slide p {
+   width: 90%;
+   float: right;
+   margin-top: 5px;
+   font-size: 13px;
+}
+
+.review_slide p:first-child {
+   font-weight: bold;
+   font-size: 16px;
+}
+
+.review_slide p:nth-child(2) {
+   color: #7dac26;
+   font-size: 16px;
+}
+
+.review_slide p:nth-child(4) {
+   font-weight: bold;
+}
+
+.review_slide p:nth-child(5) {
+   color: grey;
+}
+
+.fade {
+   animation: fade 1.5s;
+}
+
+@keyframes fade {
+   from {
+      opacity: 0
+   }
+
+   to {
+      opacity: 1
+   }
+}
+
+.review_btn {
+   display: flex;
+   width: 50%;
+   margin: 0 auto;
+   justify-content: space-between;
+   margin-top: 20px;
+}
+
+.prev,
+.next {
+   width: 100px;
+   height: 30px;
+   transition: 0.5s ease;
+   background: transparent;
+   font-size: 15px;
+   border: none;
+}
+
+.next {
+   right: 0;
+   border-radius: 3px 0 0 3px;
+}
+
+.prev:hover,
+.next:hover {
+   color: white;
+   background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 쿠폰 */
+#coupon {
+   width: 70%;
+   margin: 0 auto;
+   text-align: center;
+}

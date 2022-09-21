@@ -1,0 +1,212 @@
+/* 자주하는 질문 박스 */
+#faq_box {
+   width: 50%;
+   height: 100px;
+   margin: 0 auto; /* 중앙 정렬 */
+   display: table;
+   background-color: rgba(128, 128, 128, 0.1);
+}
+
+#faq_box_2 {
+   display: table-cell;
+   vertical-align: middle;
+}
+
+#faq_box ul {
+   width: 50%;
+   margin: 0 auto;
+   display: flex;
+   align-items: center;   /* li 요소 세로 기준 가운데 정렬 */
+}
+
+/* 자주하는 질문 텍스트 */
+#faq_box span {
+   font-size: 16px;
+   color: #7dac26;
+}
+
+/* 궁금한 점을 입력~ */
+#faq_box input {
+   width: 350px;
+   height: 35px;
+   margin-left: 10px;
+   border: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+/* 공지사항 */
+#wrap {
+   width: 50%;
+   margin: 0 auto;
+   display: flex;
+}
+
+/* 공지사항 영역 */
+#notice {
+   width: 70%;
+   height: 280px;
+   margin: 5px auto;
+}
+
+/* 공지사항 텍스트 */
+#notice span {
+   font-size: 16px;
+   color: #7dac26;
+}
+
+/* more */
+#notice span:nth-child(2) {
+   color: black;
+   font-size: 13px;
+   margin-left: 520px;
+   cursor: pointer;
+}
+
+/* more 아이콘 */
+#notice i {
+   margin-left: 10px;
+}
+
+/* 공지사항 소식 박스 */
+#notice_item {
+   width: 650px;
+}
+
+#notice_item ul {
+   padding: 0;
+}
+
+#notice_item button {
+   margin-right: 10px;
+   background: transparent;
+   border: 1px solid #7dac26;
+   color: #7dac26;
+   width: 80px;
+}
+
+#notice_item li {
+   padding: 10px;
+   border: 1px solid rgba(0, 0, 0, 0.1);
+   border-bottom: none;
+}
+
+#notice_item li:last-child {
+   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 공지사항 날짜 */
+#notice_item p {
+   margin: -20px 0 0 550px;
+}
+
+/* 고객문의, 고객센터 */
+#customer {
+   width: 50%;
+   margin: 0 auto;
+   padding: 5px;
+   cursor: pointer;
+}
+
+#customer i {
+   font-size: 30px;
+   color: #7dac26;
+}
+
+#customer i:nth-child(2) {
+   margin-left: -10px;
+}
+
+#customer ul {
+   padding: 0;
+   margin-top: -3px;
+}
+
+#customer li:first-child {
+   height: 50px;
+   line-height: 50px;
+   text-align: center;
+   border: 1px solid rgba(0, 0, 0, 0.1);
+   padding: 40px;
+   font-size: 25px;
+}
+
+#customer li:nth-child(2) {
+   height: 50px;
+   line-height: 50px;
+   border: 1px solid rgba(0, 0, 0, 0.1);
+   border-top: none;
+   padding: 40px;
+   text-align: center;
+   font-size: 25px;
+}
+
+/* 상세 질문 */
+#detail_faq {
+   width: 50%;
+   height: 300px;
+   margin: 0 auto;
+   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#detail_icon ul {
+   padding: 0;
+   margin: 0;
+   display: flex;
+   font-size: 35px;
+   cursor: pointer;
+}
+
+#detail_icon li {
+   border-left: 1px solid rgba(0, 0, 0, 0.1);
+   width: 100%;
+   margin: 0 auto;
+   text-align: center;
+}
+
+#detail_icon li:first-child {
+   border-left: none;
+}
+
+#detail_icon li:first-child {
+   color: #7dac26;
+}
+
+#detail_icon li:nth-child(4) {
+   color: red;
+}
+
+#detail_icon p {
+   font-size: 13px;
+   color: black;
+}
+
+/* 상세질문 리스트 */
+#detail_faq_list {
+   width: 100%;
+   margin: -16px auto;
+}
+
+#detail_faq_list ul {
+   padding: 0;
+}
+
+#detail_faq_list li {
+   padding: 10px;
+   border: 1px solid rgba(0, 0, 0, 0.1);
+   border-left: none;
+   border-right: none;
+   border-bottom: none;
+   font-size: 13px;
+}
+
+#detail_faq_list span {
+   margin-left: 45px;
+   margin-right: 80px;
+}
+
+#detail_faq_list button {
+   margin-right: 50px;
+   background: transparent;
+   border: 1px solid #7dac26;
+   color: #7dac26;
+   width: 80px;
+}

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4. 환율</title>
+
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="192x192" href="panoimg/favicon.png">
+
+    <!-- 폰트어썸 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <style>
+        /* 초기화 */
+        * {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        /* input 수량 버튼 제거 */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        img {
+            width: 30px;
+            height: 13px;
+        }
+
+        /* 전체 영역 */
+        .container {
+            margin: 80px auto;
+            width: 800px;
+            height: 800px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+        }
+
+        /* 메인 텍스트 */
+        .ex_text {
+            margin: 100px auto;
+            width: 80%;
+            height: 300px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .ex_text>i {
+            width: 100%;
+            color: #3ca1cf;
+            font-size: 100px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        /* Exchange Rate Calculator*/
+        .ex_text span:nth-child(2) {
+            display: block;
+            color: #0880b8;
+            font-weight: bold;
+            font-size: 30px;
+            width: 100%;
+            margin: 15px auto;
+            text-align: center;
+        }
+
+        /* Choose the currency and the amounts ~ */
+        .ex_text span:nth-child(3) {
+            display: block;
+            color: #045d86;
+            font-size: 15px;
+            width: 100%;
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        /* 첫 번째 박스 */
+        .ex_box {
+            width: 80%;
+            display: flex;
+            margin: 90px auto;
+        }
+
+        .drop_btn {
+            border-width: 1px 1px 0;
+            background-color: #648899;
+            cursor: pointer;
+            width: 100%;
+            height: 50px;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* 드롭다운 */
+        .drop {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* 국가 */
+        .drop_item {
+            display: none;
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .drop_item li {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .drop_item li:hover {
+            background-color: #648899;
+            cursor: pointer;
+        }
+
+        .drop:hover .drop_item {
+            display: block;
+        }
+
+        /* 금액 */
+        .amount {
+            width: 100%;
+            border: none;
+            text-align: right;
+            color: white;
+        }
+
+        .amount:focus {
+            outline: none;
+        }
+
+        .kor_num {
+            text-align: right;
+            font-weight: bold;
+            color: white;
+        }
+
+        .input_box {
+            border: 1px solid #648899;
+            width: 2000px;
+            display: none;
+        }
+
+        .fa-rotate {
+            font-size: 50px;
+            color: #648899;
+            position: absolute;
+            top: 650px;
+            left: 930px;
+        }
+
+        /* 본 환율은 ~ */
+        p {
+            width: 80%;
+            margin: 0 auto;
+            color: grey;
+            margin-top: -80px;
+            text-align: right;
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 전체 영역 -->
+    <div class="container">
+
+        <!-- 메인 텍스트 -->
+        <div class="ex_text">
+            <i class="fa-solid fa-dollar-sign"></i>
+            <span>Exchange Rate Calculator</span>
+            <span>Choose the currency and the amounts to get the<br> exchange rate</span>
+        </div>
+
+        <!-- 첫 번째 박스 -->
+        <div class="ex_box">
+
+            <!-- 드롭다운 -->
+            <div class="drop">
+                <button class="drop_btn" id="from_btn">국가를 선택하세요.</button>
+
+                <!-- 국가 -->
+                <ul class="drop_item" id="from_list">
+                    <li id="KRW"><img class="flag"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/120px-Flag_of_South_Korea.svg.png">
+                        KRW</li>
+
+                    <li id="USD"><img class="flag"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Flag_of_the_United_States_%28Pantone%29.svg/255px-Flag_of_the_United_States_%28Pantone%29.svg.png">
+                        USD
+                    </li>
+
+                    <li id="CNY"><img class="flag"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/255px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+                        CNY
+                    </li>
+
+                    <li id="JPY"><img class="flag"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/255px-Flag_of_Japan.svg.png">
+                        JPY
+                    </li>
+                </ul>
+            </div>
+
+            <div class="input_box from_box">
+                <input type="number" class="amount" id="fromAmount" onkeyup="convert('from')"
+                    placeholder="금액을 입력하세요. " />
+                <div id="fromKorea" class="kor_num">달러&nbsp;</div>
+            </div>
+        </div>
+
+        <i class="fa-solid fa-rotate"></i>
+
+        <div class="ex_box">
+            <div class="drop">
+                <button class="drop_btn" id="to_btn">국가를 선택하세요.</button>
+                <ul class="drop_item" id="to_list">
+                    <li id="KRW"><img class="flag"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/120px-Flag_of_South_Korea.svg.png" />
+                        KRW</li>
+
+                    <li id="USD"><img class="flag"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Flag_of_the_United_States_%28Pantone%29.svg/255px-Flag_of_the_United_States_%28Pantone%29.svg.png">
+                        USD
+                    </li>
+
+                    <li id="CNY"><img class="flag"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/255px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+                        CNY
+                    </li>
+
+                    <li id="JPY"><img class="flag"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/255px-Flag_of_Japan.svg.png">
+                        JPY
+                    </li>
+                </ul>
+            </div>
+
+            <div class="input_box to_box">
+                <input type="number" class="amount" id="toAmount" onkeyup="convert('to')" placeholder="금액을 입력하세요. " />
+                <div id="toKorea" class="kor_num">달러&nbsp;</div>
+            </div>
+        </div>
+
+        <p>(본 환율은 2022년 8월을 기준으로 합니다.)</p>
+    </div>
+
+
+    <script>
+        // 환율
+        const ratio = {
+            KRW: {
+                USD: 0.00077,
+                KRW: 1,
+                CNY: 0.0052,
+                JPY: 0.10,
+                unit: " 원",
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/120px-Flag_of_South_Korea.svg.png"
+            },
+
+            USD: {
+                USD: 1,
+                KRW: 1303.74,
+                CNY: 6.76,
+                JPY: 134.99,
+                unit: " 달러",
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Flag_of_the_United_States_%28Pantone%29.svg/255px-Flag_of_the_United_States_%28Pantone%29.svg.png"
+            },
+
+            CNY: {
+                USD: 0.15,
+                KRW: 192.80,
+                CNY: 1,
+                JPY: 19.96,
+                unit: " 위안",
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/255px-Flag_of_the_People%27s_Republic_of_China.svg.png"
+            },
+
+            JPY: {
+                USD: 0.0074,
+                KRW: 9.66,
+                CNY: 0.05,
+                JPY: 1,
+                unit: " 엔",
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/255px-Flag_of_Japan.svg.png"
+            }
+        }
+
+        // 세부 설정
+        var unitWords = [" ", "만 ", "억 ", "조 ", "경 "];
+        var splitUnit = 10000;
+        let to_btn = document.getElementById("to_btn");
+        let from_btn = document.getElementById("from_btn");
+        let toCurrency = "KRW";
+        let fromCurrency = "KRW";
+        let from_box = document.querySelector(".from_box")
+        let to_box = document.querySelector(".to_box")
+
+        // 국가 변경
+        document.querySelectorAll("#from_list li").forEach(function (item) {
+            item.addEventListener("click", function () {
+                fromCurrency = this.id;
+                from_btn.innerHTML = `<img class="flag"src="${ratio[fromCurrency].img}"/> ${fromCurrency}`;
+                convert("from");
+                from_box.style.display = "block"
+            });
+        });
+
+        // 국가 변경
+        document.querySelectorAll("#to_list li").forEach(function (item) {
+            item.addEventListener("click", function () {
+                toCurrency = this.id;
+                to_btn.innerHTML = `<img class="flag"src="${ratio[toCurrency].img}"/> ${toCurrency}`;
+                convert("from");
+                to_box.style.display = "block"
+            });
+        });
+
+        // 입력값 변환
+        function convert(type) {
+            let amount = 0;
+            if (type == "from") {
+                amount = document.getElementById("fromAmount").value;
+                let convertedAmount = amount * ratio[fromCurrency][toCurrency];
+                document.getElementById("toAmount").value = convertedAmount;
+                renderKoreanNumber(amount, convertedAmount);
+
+            } else {
+                amount = document.getElementById("toAmount").value;
+                let convertedAmount = amount * ratio[toCurrency][fromCurrency];
+                document.getElementById("fromAmount").value = convertedAmount;
+                renderKoreanNumber(convertedAmount, amount);
+            }
+        }
+
+        function renderKoreanNumber(from, to) {
+            document.getElementById("fromKorea").textContent =
+                readNum(from) + ratio[fromCurrency].unit;
+            document.getElementById("toKorea").textContent =
+                readNum(to) + ratio[toCurrency].unit;
+        }
+
+        function readNum(num) {
+            let resultString = "";
+            let resultArray = [];
+            for (let i = 0; i < unitWords.length; i++) {
+                let unitResult =
+                    (num % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+                unitResult = Math.floor(unitResult);
+                if (unitResult > 0) {
+                    resultArray[i] = unitResult;
+                }
+            }
+            for (let i = 0; i < resultArray.length; i++) {
+                if (!resultArray[i]) continue;
+                resultString = String(resultArray[i]) + unitWords[i] + resultString;
+            }
+            return resultString;
+        }
+    </script>
+</body>
+
+</html>

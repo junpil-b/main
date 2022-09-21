@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>3. 게임 카드 셔플</title>
+
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="192x192" href="panoimg/favicon.png">
+
+    <style>
+        body {
+            background-color: black;
+            overflow: hidden;
+        }
+
+        /* 전체 영역 */
+        .container {
+            width: 80%;
+            height: 800px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            row-gap: 50px;
+            margin: 80px auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .card {
+            margin: 0 auto;
+            width: 230px;
+            height: 230px;
+            perspective: 1000px;
+        }
+
+        .card_inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flip .card_inner {
+            transform: rotateY(180deg);
+        }
+
+        .card_front,
+        .card_back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            backface-visibility: hidden;
+        }
+
+        /* 카드 뒷면 */
+        .card_back {
+            border: 1px solid white;
+        }
+
+        /* 카드 앞면 */
+        .card_front {
+            transform: rotateY(180deg);
+        }
+
+        .start_btn {
+            background-color: transparent;
+            border: 1px solid white;
+            border-radius: 10px;
+            width: 500px;
+            height: 100px;
+            color: white;
+            cursor: pointer;
+            font-size: 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .clear_text {
+            background-color: transparent;
+            border-radius: 10px;
+            width: 500px;
+            height: 100px;
+            color: green;
+            font-size: 30px;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, 0%);
+            text-align: center;
+            line-height: 100px;
+            font-size: 50px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .restart_btn {
+            background-color: transparent;
+            border: 1px solid white;
+            border-radius: 10px;
+            width: 500px;
+            height: 100px;
+            color: white;
+            cursor: pointer;
+            font-size: 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 전체 영역 -->
+    <div class="container"></div>
+
+    <button class="start_btn" onclick="start()">시작하기</button>
+    <p class="clear_text">CLEAR</p>
+    <button class="restart_btn" onclick="restart()">다시하기</button>
+
+
+    <script>
+        let start_btn = document.querySelector('.start_btn');
+        let clear_text = document.querySelector('.clear_text');
+        let restart_btn = document.querySelector('.restart_btn');
+
+        function start() {
+            start_btn.style.display = "none";
+            const horizontal = 4; // 가로
+            const vertical = 3; // 세로
+
+            const container = document.querySelector(".container");
+
+            // 색상
+            const colorArray = [
+                "red",
+                "red",
+                "orange",
+                "orange",
+                "yellow",
+                "yellow",
+                "green",
+                "green",
+                "blue",
+                "blue",
+                "salmon",
+                "salmon"
+            ];
+
+            //  색상 배열
+            let color = [];
+
+            // 새로 시작할 때 돌릴 색깔 배열을 만듬
+            let colorSelect = colorArray.slice();
+
+            // 짝이 맞는 카드
+            let successCards = [];
+
+            let gameStart;
+
+            // 카드 셔플
+            const shuffle = () => {
+                for (let i = 0; colorSelect.length > 0; i++) {
+                    color = color.concat(
+                        colorSelect.splice(Math.floor(Math.random() * colorSelect.length), 1)
+                    );
+                }
+            };
+
+            // 카드 나열
+            const setting = (hori, verti) => {
+                for (let i = 0; i < hori * verti; i++) {
+
+                    // 객체를 생성
+                    const card = document.createElement("div");
+                    const cardInner = document.createElement("div");
+                    const cardBack = document.createElement("div");
+                    const cardFront = document.createElement("div");
+
+                    // 생성한 문서객체에 클래스를 부여
+                    card.classList.add("card");
+                    cardInner.classList.add("card_inner");
+                    cardFront.classList.add("card_front");
+                    cardBack.classList.add("card_back");
+
+                    // 문서객체 추가
+                    container.appendChild(card);
+                    card.appendChild(cardInner);
+                    cardInner.appendChild(cardFront);
+                    cardInner.appendChild(cardBack);
+
+                    // 뒷면에 카드 이미지
+                    cardBack.style.backgroundImage = "url('panoimg/card.png')";
+                    cardBack.style.backgroundSize = "100%";
+                    cardBack.style.cursor = "pointer";
+
+                    // 얖면에 카드 색 
+                    cardFront.style.backgroundColor = color[i];
+                }
+
+                const Cards = document.querySelectorAll(".card");
+
+                // 카드 나열 중 클릭 금지
+                let clickFlag = false;
+
+                // 유저가 선택한 카드 두 장
+                let cardArray = [];
+
+                Cards.forEach((Card, index) => {
+                    setTimeout(() => {
+                        Card.classList.add("flip");
+                    }, 1000 + 100 * index);
+                });
+
+                // 5초 후에 카드를 뒤집기
+                Cards.forEach((Card, _) => {
+                    setTimeout(() => {
+                        Card.classList.remove("flip");
+                    }, 5000);
+                });
+
+                setTimeout(() => {
+                    clickFlag = true;
+
+                    // 게임 실행
+                    gameStart = new Date();
+                }, 5500);
+
+                Cards.forEach((card, _) => {
+                    card.addEventListener("click", () => {
+                        // 카드 나열 전 클릭 금지, 짝이 맞는 카드가 나오면 클릭 금지
+                        if (clickFlag && !successCards.includes(card)) {
+                            card.classList.toggle("flip");
+
+                            // 유저가 선택한 카드를 배열에 담기
+                            cardArray.push(card);
+
+                            // 유저가 카드 두 장을 선택했을 때 카드에 색상 넣기
+                            if (cardArray.length === 2) {
+                                let firstCard =
+                                    cardArray[0].querySelector(".card_front").style.backgroundColor;
+                                let secondCard =
+                                    cardArray[1].querySelector(".card_front").style.backgroundColor;
+
+                                // 두 카드의 색이 같을 때
+                                if (firstCard == secondCard) {
+                                    successCards.push(cardArray[0]);
+                                    successCards.push(cardArray[1]);
+
+                                    // 배열 초기화
+                                    cardArray = [];
+
+                                    // 6쌍의 카드가 서로 일치할 때
+                                    if (successCards.length == 12) {
+
+                                        // 화면 초기화
+                                        container.innerHTML = "";
+                                        clear_text.style.display = "block";
+                                        restart_btn.style.display = "block";
+                                    }
+
+                                    // 두 카드의 색이 다를 때
+                                } else {
+                                    clickFlag = false;
+
+                                    setTimeout(() => {
+                                        cardArray[0].classList.remove("flip");
+                                        cardArray[1].classList.remove("flip");
+
+                                        clickFlag = true;
+
+                                        cardArray = [];
+                                    }, 1000);
+                                }
+                            }
+                        }
+                    });
+                });
+            };
+
+            shuffle();
+            setting(horizontal, vertical);
+        }
+
+        // 게임 재시작
+        function restart() {
+            clear_text.style.display = "none";
+            restart_btn.style.display = "none";
+            start();
+        }
+    </script>
+
+</body>
+
+</html>

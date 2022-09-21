@@ -1,0 +1,537 @@
+/* 초기화 */
+body {
+   margin: 0;
+   padding: 0;
+   overflow-x: hidden;
+}
+
+ul {
+   list-style: none;
+}
+
+a {
+   text-decoration: none;
+}
+
+a:visited {
+   color: black;
+}
+
+a:link {
+   color: black;
+}
+
+input {
+   border: none;
+}
+
+input:focus {
+   outline: none;
+}
+
+/* 헤더  */
+#header_bg {
+   background-color: #7dac26;
+   width: 100%;
+   height: 30px;
+}
+
+/* 헤더 박스 */
+#header_box {
+   width: 70%;
+   margin: 0 auto; /* 요소 가운데 정렬 */
+   height: 1000px;
+}
+
+/* 헤더 메뉴 로그인 ~ */
+#header_menu {
+   display: flex; /* 요소 가로 졍렬 */
+   float: right;
+   line-height: 0;
+}
+
+#header_menu li a {
+   font-size: 13px;
+   color: white;
+   margin-left: 10px; /* 요소 간격 */
+}
+
+/* 로그아웃 버튼 */
+#logout_btn {
+   display: block;
+   margin: -10px -5px;
+   cursor: pointer;
+   font-size: 13px;
+   color: white;
+   background-color: transparent; /* 로그아웃 버튼 배경 삭제 */
+   border: none;
+}
+
+/* 마이페이지, 배송조회 요소 숨기기 */
+#my_page, #delivery {
+   display: none;
+}
+
+/* 로그인 성공 시 아이디 출력 */
+#input_test {
+   display: block;
+   width: 70px;
+   background-color: transparent; /* 로그인 텍스트 배경 삭제 */
+   border: none;
+   margin: -8px -70px;
+   padding: 0;
+   overflow: hidden; 
+   text-overflow: ellipsis; /* 말줄임 */
+   white-space: nowrap; /* 줄바꿈 X */
+}
+
+/* 헤더 타이핑 */
+#header_text {
+   font-size: 16px;
+   color: white;
+   font-weight: bold;
+   position: absolute;
+   left: 285px;
+   top: -10px;
+}
+
+/* 헤더 타이핑 뒤에 커서 깜빡임 표현 */
+#header_text::after {
+   content: "";
+   display: block;
+   position: absolute;
+   top: 5px;
+   right: -10px;
+   width: 5px;
+   height: 15px;
+   background-color: white;
+}
+
+/* 헤더 타이핑 완료 후에도 커서 깜빡임 유지 */
+#header_text.active::after {
+   display: none;
+}
+
+/* 네브 박스 */
+#nav_box {
+   width: 70%;
+   margin: 0 auto; /* 박스 가운데 정렬 */
+}
+
+/* 네브 메뉴 */
+#nav_menu {
+   display: flex;
+   justify-content: space-between; /* 요소들 사이에 간격을 두고 배치 */
+}
+
+/* 전체메뉴, 쇼핑, About Us */
+#nav_menu ul {
+   display: flex;
+   padding: 0;
+}
+
+/* 전체메뉴, 쇼핑, About Us */
+#nav_menu li {
+   margin-right: 30px;
+}
+
+/* 전체메뉴, 쇼핑, About Us */
+#nav_menu_font a {
+   color: grey;
+   font-family: 'Jua', sans-serif; /* 구글 폰트 */
+}
+
+/* 네브 메뉴 언더바 효과 */
+#all_menu::before,
+#shop_menu::before,
+#about_menu::before {
+   content: '';
+   position: relative;
+   bottom: -30px;
+   left: 0px;
+   width: 100%;
+   height: 3px;
+   background: #7dac26;
+   display: block;
+   transform-origin: right; /* 언더바를 오른쪽으로 마무리 */
+   transform: scale(0, 1);
+   transition: transform 0.5s cubic-bezier(1, 0, 0, 1) /* 베지어 곡선 제어 */
+}
+
+/* 네브 메뉴 언더바 효과 */
+#all_menu:hover::before,
+#shop_menu:hover::before,
+#about_menu:hover::before {
+   transform-origin: left; /* 언더바를 왼쪽에서 시작해서 */
+   transform: scale(1, 1)
+}
+
+/* 스킨케어 ~ 옴므 */
+/* 전체메뉴 창 */
+#all_menu_drop {
+   width: 100%;
+   border: 1px solid white;
+}
+
+/* 스킨케어 ~ 옴므 폰트 색상 */
+#all_menu_drop>ul>li>a {
+   color: #7dac26;
+}
+
+#all_menu_drop ul {
+   display: flex;
+   justify-content: space-between; 
+   font-family: 'Jua', sans-serif; /* 구글 폰트 */
+   font-size: 20px;
+   padding: 0;
+}
+
+#all_menu_drop ul li a:hover {
+   text-decoration: underline;
+   text-underline-position: under;
+}
+
+#all_menu_drop li ul {
+   display: flex;
+   flex-direction: column;
+   font-size: 15px;
+}
+
+#all_menu_drop li ul li {
+   margin-top: 13px;
+}
+
+#all_menu_drop li ul li a {
+   color: grey;
+}
+
+/* 신제품 ~ 리뷰/후기 */
+/* 쇼핑 메뉴 */
+#shop_menu_drop ul {
+   padding: 0;
+   margin-top: -10px;
+   margin-left: 105px;
+   font-family: 'Jua', sans-serif;
+   font-size: 20px;
+}
+
+#shop_menu_drop li {
+   margin-top: 20px;
+}
+
+#shop_menu_drop li a {
+   font-size: 14px;
+}
+
+/* 쇼핑 메뉴 하위 신상품 메뉴 */
+#new_menu::after {
+   content: "NEW!";
+   color: red;
+   font-size: 10px;
+   position: relative;
+   top: -10px;
+   animation: neon 1.5s ease infinite;
+}
+
+/* 베스트 메뉴 */
+#best_menu::after {
+   content: "HOT!";
+   color: red;
+   font-size: 10px;
+   position: relative;
+   top: -10px;
+   animation: neon 1.5s ease infinite;
+}
+
+@keyframes neon {
+   0% {
+      color: grey;
+   }
+
+   30% {
+      color: red;
+   }
+
+   50% {
+      color: grey;
+   }
+
+   70% {
+      color: yellow;
+   }
+
+   100% {
+      color: grey;
+   }
+}
+
+/* 로고 */
+#logo a {
+   font-size: 20px;
+   color: #7dac26;
+   font-weight: bold;
+}
+
+/* 인기 검색어 테두리 */
+#keyword_box {
+   height: 30px;
+   overflow: hidden;
+   width: 160px;
+}
+
+#keyword_box li a {
+   display: block;
+   height: 30px;
+   line-height: 30px;
+}
+
+/* 인기 검색어 말줄임 */
+#keyword li a {
+   font-size: 13px;
+   float: left;
+   width: 160px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+}
+
+/* 인기 검색어 펼치기 버튼 */
+#keyword_btn_down, #keyword_btn_up {
+   width: 20px;
+   height: 20px;
+   z-index: 10;
+   background-color: transparent; /* 버튼 배경 제거 */
+   border: none;
+   cursor: pointer;
+   color: #7dac26;
+   margin-right: 5px;
+   margin-top: 5px;
+}
+
+/* 인기 검색어 전체 리스트 */
+#keyword_all_box {
+   position: absolute;
+   z-index: 5;
+   margin-left: 980px;
+   margin-top: -30px;
+}
+
+#keyword_all {
+   width: 390px;
+   padding: 25px 15px;
+   background-color: white;
+   border: 1px solid rgba(0, 0, 0, 0.151);
+   border-radius: 10px;
+}
+
+#keyword_all li a {
+   font-size: 13px;
+   color: #7dac26;
+   padding: 5px 0;
+}
+
+#keyword_all li a:hover {
+   text-decoration: underline;
+   text-underline-position: under; /* 언더라인 여백 */
+}
+
+.fa-minus {
+   color: black;
+   font-size: 13px;
+   margin-top: 10px;
+   margin-left: 10px;
+}
+
+.fa-arrow-up {
+   color: red;
+   font-size: 10px;
+   margin-top: 13px;
+   margin-left: 10px;
+}
+
+.fa-arrow-down {
+   color: blue;
+   font-size: 10px;
+   margin-top: 15px;
+   margin-left: 10px;
+}
+
+/* 검색바 */
+#search_bar input {
+   border-bottom: 1px solid #7dac26;
+   width: 150px;
+   color: #7dac26;
+}
+
+/* 검색 리스트 */
+#search_list {
+   font-size: 13px;
+   width: 150px;
+   padding: 0;
+   margin-top: 5px;
+   overflow: hidden;
+   white-space: nowrap;
+}
+
+/* 검색 리스트 색상 */
+#search_list li a {
+   color: #7dac26;
+   font-weight: bold;
+}
+
+/* 각 페이지 메인 텍스트 */
+#text_box {
+   width: 50%;
+   margin: 0 auto;
+   text-align: left;
+}
+
+#text_box span {
+   font-size: 35px;
+   color: #7dac26;
+}
+
+#text_box_underline {
+   width: 100%;
+   margin: 0 auto;
+   border: 1px solid #7dac26;
+}
+
+.brand {
+   font-size: 13px;
+   font-weight: bold;
+   color: grey;
+}
+
+.des {
+   font-size: 13px;
+   color: grey;
+}
+
+.price {
+   font-size: 20px;
+   font-weight: bold;
+   color: #7dac26;
+}
+
+.price::after {
+   content: "원";
+   font-size: 13px;
+}
+
+
+/* 사이드 바 */
+#side_bar ul {
+   padding: 0;
+   position: fixed;
+   top: 530px;
+   right: 0px;
+   background-color: #7dac26;
+   text-align: center;
+   z-index: 10;
+}
+
+#side_bar li {
+   margin-top: 10px;
+   border-bottom: 1px solid white;
+   padding: 5px;
+}
+
+#side_bar li:last-child {
+   border-bottom: none;
+}
+
+#side_bar li:hover a, #side_bar li:hover i {
+   color: black;
+}
+
+#side_bar a {
+   font-size: 10px;
+   color: white;
+   margin-top: 10px;
+}
+
+#side_bar i {
+   display: block;
+   text-align: center;
+   font-size: 20px;
+   color: white;
+}
+
+/* 푸터 */
+footer {
+   width: 100%;
+   height: 300px;
+   background: rgba(128, 128, 128, 0.05);
+}
+
+#footer_box {
+   width: 50%;
+   height: 300px;
+   margin: 0 auto;
+   display: flex;
+   justify-content: space-between;
+   font-weight: bold;
+}
+
+#footer_1 {
+   width: 70%;
+   height: 250px;
+}
+
+#footer_1 h3 {
+   margin-top: 30px;
+
+}
+
+#footer_1 p {
+   font-size: 13px;
+}
+
+#footer_2 {
+   width: 60%;
+   height: 250px;
+}
+
+#footer_2_ul_1 {
+   padding: 0;
+   display: flex;
+   margin-left: 240px;
+   margin-top: 100px;
+}
+
+
+#footer_2_ul_1 li a {
+   margin-left: 15px;
+   font-size: 13px;
+}
+
+#footer_2_ul_2 {
+   padding: 0;
+   display: flex;
+   margin-left: 250px;
+}
+
+#footer_2_ul_2 li {
+   margin-left: 15px;
+   font-size: 13px;
+}
+
+#footer_3 {
+   width: 50%;
+   height: 50px;
+   margin: 0 auto;
+
+}
+
+#footer_3 ul {
+   margin-top: -70px;
+   line-height: 50px;
+   padding: 0;
+   display: flex;
+   justify-content: space-between;
+}
+
+#footer_3 a {
+   font-size: 13px;
+}

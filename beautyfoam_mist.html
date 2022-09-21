@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <!-- fav-icon -->
+   <link rel="icon" type="image/png" sizes="192x192" href="beautyimg/beauty_fav.png">
+
+   <!-- 폰트어썸 -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+   <!-- 구글 폰트 -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+   <!-- 공통 스타일시트 -->
+   <link rel="stylesheet" href="beautyfoam_common.css">
+   <link rel="stylesheet" href="beautyfoam_mist.css">
+
+   <title>뷰티폼: 미스트/오일</title>
+</head>
+
+<body>
+   <!-- 헤더 -->
+   <header>
+      <div id="header_bg">
+         <div id="header_box">
+            <ul id="header_menu">
+               <li><input type="text" id="input_test" disabled></li>
+               <li><button type=button id="logout_btn" onclick="logout()">로그아웃</button></li>
+               <li><a href="#" id="login" onclick="login_pop()">로그인</a></li>
+               <li><a href="#" id="join" onclick="join_pop()">회원가입</a></li>
+               <li><a href="beautyfoam_my.html" id="my_page">마이페이지</a></li>
+               <li><a href="beautyfoam_del.html" id="delivery">배송조회</a></li>
+               <li><a href="beautyfoam_cs.html" id="cs">고객센터</a></li>
+            </ul>
+         </div>
+      </div>
+   </header>
+
+   <br>
+
+   <!-- 네브 -->
+   <nav id="nav_box">
+      <!-- 네브 메뉴 -->
+      <div id="nav_menu">
+         <ul id="nav_menu_font">
+            <li><a href="#" id="all_menu"><i class="fa-solid fa-bars"></i> 전체메뉴</a></li>
+            <li><a href="#" id="shop_menu"><i class="fa-brands fa-shopify"></i> 쇼핑</a></li>
+            <li><a href="beautyfoam_about.html" id="about_menu"><i class="fa-brands fa-envira"></i> About Us</a></li>
+         </ul>
+
+         <!-- 로고 -->
+         <ul>
+            <span id="logo"><a href="beautyfoam.html"><i class="fa-brands fa-envira"></i>Beautyfo:am</a></span>
+         </ul>
+
+         <!-- 인기 검색어 -->
+         <ul>
+            <div id="keyword_box" onclick="keyword_all()">
+               <ul id="keyword">
+                  <li><a href="#">1. 갸스비 포어 케어 올인원 에센스 145ml</a></li>
+                  <li><a href="#">2. 갸스비 포어 케어 모공 집중 마스크 팩 5매</a></li>
+                  <li><a href="#">3. 니베아 맨 센서티브 햄프씨드 오일 로션</a></li>
+                  <li><a href="#">4. 닥터자르트 컨트롤에이 티트리먼트 모이스처라이저 100ml</a></li>
+                  <li><a href="#">5. 랄프로렌 폴로 블루 애프터 쉐이브 EDT 125ml</a></li>
+                  <li><a href="#">6. 마녀공장 갈락토미 클리어스킨 토너 210ml</a></li>
+                  <li><a href="#">7. 바비브라운 엑스트라 리페어 아이 크림 인텐스 15ml</a></li>
+                  <li><a href="#">8. 바비브라운 하이드레이팅 아이 크림</a></li>
+                  <li><a href="#">9. 비욘드 엔젤아쿠아 워터 에센스 180ml</a></li>
+                  <li><a href="#">10. 비욘드 엔젤아쿠아 데일리 세라마이드크림 더블 기획</a></li>
+               </ul>
+            </div>
+
+            <button type="button" id="keyword_btn_down"><i class="fa-solid fa-angle-down"></i></button>
+            <button type="button" id="keyword_btn_up"><i class="fa-solid fa-angle-up"></i></button>
+
+            <!-- 검색바 -->
+            <div id="search_bar">
+               <input type="text" class="search_keyword" placeholder="검색어를 입력하세요."><br>
+               <ul id="search_list">
+                  <li><a href="beautyfoam_skin.html#item_1">갸스비 포어 케어 올인원 에센스 145ml</a></li>
+                  <li><a href="beautyfoam_skin.html#item_2">갸스비 포어 케어 모공 집중 마스크 팩 5매</a></li>
+                  <li><a href="beautyfoam_skin.html#item_3">니베아 맨 센서티브 햄프씨드 오일 로션</a></li>
+                  <li><a href="beautyfoam_skin.html#item_4">닥터자르트 컨트롤에이 티트리먼트 모이스처라이저 100ml</a></li>
+                  <li><a href="beautyfoam_skin.html#item_5">랄프로렌 폴로 블루 애프터 쉐이브 EDT 125ml</a></li>
+                  <li><a href="beautyfoam_skin.html#item_6">마녀공장 갈락토미 클리어스킨 토너 210ml</a></li>
+                  <li><a href="beautyfoam_cream.html#item_7">바비브라운 엑스트라 리페어 아이 크림 인텐스 15ml</a></li>
+                  <li><a href="beautyfoam_cream.html#item_8">바비브라운 하이드레이팅 아이 크림</a></li>
+                  <li><a href="beautyfoam_cream.html#item_9">비욘드 엔젤아쿠아 워터 에센스 180ml</a></li>
+                  <li><a href="beautyfoam_cream.html#item_10">비욘드 엔젤아쿠아 데일리 세라마이드크림 더블 기획</a></li>
+               </ul>
+            </div>
+         </ul>
+      </div>
+
+      <!-- 인기 검색어 한 번에 보기 -->
+      <div id="keyword_all_box">
+         <ul id="keyword_all">
+            <li><a href="beautyfoam_skin.html#item_1">1. 갸스비 포어 케어 올인원 에센스 145ml</a><i class="fa-solid fa-minus"></i>
+            </li>
+            <li><a href="beautyfoam_skin.html#item_2">2. 갸스비 포어 케어 모공 집중 마스크 팩 5매</a><i class="fa-solid fa-arrow-up">
+                  1</i></li>
+            <li><a href="beautyfoam_skin.html#item_3">3. 니베아 맨 센서티브 햄프씨드 오일 로션</a><i class="fa-solid fa-arrow-down">
+                  1</i>
+            </li>
+            <li><a href="beautyfoam_skin.html#item_4">4. 닥터자르트 컨트롤에이 티트리먼트 모이스처라이저 100ml</a><i
+                  class="fa-solid fa-arrow-up"> 1</i></li>
+            <li><a href="beautyfoam_skin.html#item_5">5. 랄프로렌 폴로 블루 애프터 쉐이브 EDT 125ml</a><i
+                  class="fa-solid fa-arrow-down"> 1</i>
+            </li>
+            <li><a href="beautyfoam_skin.html#item_6">6. 마녀공장 갈락토미 클리어스킨 토너 210ml</a><i class="fa-solid fa-arrow-up">
+                  1</i></li>
+            <li><a href="beautyfoam_cream.html#item_7">7. 바비브라운 엑스트라 리페어 아이 크림 인텐스 15ml</a><i
+                  class="fa-solid fa-arrow-down"> 1</i></li>
+            <li><a href="beautyfoam_cream.html#item_8">8. 바비브라운 하이드레이팅 아이 크림</a><i class="fa-solid fa-arrow-up"> 3</i>
+            </li>
+            <li><a href="beautyfoam_cream.html#item_9">9. 비욘드 엔젤아쿠아 워터 에센스 180ml</a><i class="fa-solid fa-arrow-up">
+                  3</i></li>
+            <li><a href="beautyfoam_cream.html#item_10">10. 비욘드 엔젤아쿠아 데일리 세라마이드크림 더블 기획</a><i
+                  class="fa-solid fa-arrow-up"> 3</i></li>
+         </ul>
+      </div>
+
+      <!-- 전체메뉴 창 -->
+      <div id="all_menu_drop">
+         <ul>
+            <li><a href="beautyfoam_skin.html">스킨케어</a>
+               <ul>
+                  <li><a href="beautyfoam_skin.html">스킨/로션/올인원</a></li>
+                  <li><a href="beautyfoam_cream.html">에센스/크림</a></li>
+                  <li><a href="beautyfoam_mist.html">미스트/오일</a></li>
+               </ul>
+            </li>
+
+            <li><a href="">마스크팩/선케어</a>
+               <ul>
+                  <li><a href="">시트팩/패드</a></li>
+                  <li><a href="">페이셜팩</a></li>
+                  <li><a href="">코팩/패치</a></li>
+                  <li><a href="">선블록</a></li>
+                  <li><a href="">태닝/에프터선</a></li>
+               </ul>
+            </li>
+
+            <li><a href="">클렌징</a>
+               <ul>
+                  <li><a href="">페이셜클렌징</a></li>
+                  <li><a href="">메이크업클렌징</a></li>
+                  <li><a href="">필링/패드</a></li>
+               </ul>
+            </li>
+
+            <li><a href="">바디케어</a>
+               <ul>
+                  <li><a href="">립</a></li>
+                  <li><a href="">로션/크림</a></li>
+                  <li><a href="">워시/스크럽</a></li>
+                  <li><a href="">미스트/오일</a></li>
+                  <li><a href="">핸드/풋</a></li>
+                  <li><a href="">제모</a></li>
+                  <li><a href="">데오도란트</a></li>
+               </ul>
+            </li>
+
+            <li><a href="">메이크업/네일</a>
+               <ul>
+                  <li><a href="">립</a></li>
+                  <li><a href="">베이스</a></li>
+                  <li><a href="">아이</a></li>
+                  <li><a href="">미용소품</a></li>
+                  <li><a href="">네일용품</a></li>
+                  <li><a href="">페디용품</a></li>
+                  <li><a href="">케어</a></li>
+               </ul>
+            </li>
+
+            <li><a href="">헤어케어</a>
+               <ul>
+                  <li><a href="">샴푸/린스</a></li>
+                  <li><a href="">트리트먼트/팩</a></li>
+                  <li><a href="">헤어기기</a></li>
+                  <li><a href="">헤어브러쉬</a></li>
+                  <li><a href="">염색/펌</a></li>
+                  <li><a href="">에센스</a></li>
+               </ul>
+            </li>
+
+            <li><a href="">향수/디퓨저</a>
+               <ul>
+                  <li><a href="">여성향수</a></li>
+                  <li><a href="">남성향수</a></li>
+                  <li><a href="">디퓨저/캔들</a></li>
+               </ul>
+            </li>
+
+            <li><a href="">옴므</a>
+               <ul>
+                  <li><a href="">스킨케어</a></li>
+                  <li><a href="">헤어케어</a></li>
+                  <li><a href="">바디케어</a></li>
+                  <li><a href="">메이크업</a></li>
+                  <li><a href="">쉐이빙</a></li>
+               </ul>
+            </li>
+         </ul>
+      </div>
+
+      <!-- 쇼핑 메뉴 드랍 -->
+      <div id="shop_menu_drop">
+         <ul>
+            <li><a href="beautyfoam_new.html" id="new_menu">신제품</a></li>
+            <li><a href="#" id="best_menu">BEST</a></li>
+            <li><a href="#" id="event_menu">이벤트</a></li>
+            <li><a href="#" id="coupon_menu">쿠폰/할인</a> </li>
+            <li><a href="#" id="review_menu">리뷰/후기</a> </li>
+         </ul>
+      </div>
+   </nav>
+
+   <br>
+   <hr>
+   <br>
+
+   <!-- 스킨케어 텍스트 -->
+   <div id="text_box">
+      <span><b>스킨케어</b></span> <br><br>
+      <div id="text_box_underline"></div>
+   </div>
+
+   <br>
+   <br>
+
+   <div id="mist_wrap">
+      <span><b>미스트/오일</b></span><br>
+      <input type="text" id="item_count" disabled>
+
+      <div class="mist_category">
+         <ul>
+            <li id="mist_btn_1" class="mist_btn"><a href="#" title="all" onclick="mist_btn('btn_1')">전체</a></li>
+            <li id="mist_btn_2" class="mist_btn"><a href="#" title="mist" onclick="mist_btn('btn_2')">미스트/픽서</a>
+            </li>
+            <li id="mist_btn_3" class="mist_btn"><a href="#" title="oil" onclick="mist_btn('btn_3')">페이스오일</a></li>
+         </ul>
+      </div>
+
+      <br>
+      <br>
+
+      <div id="mist_check_box">
+
+         <div id="mist_check_left">
+            <span>브랜드</span>
+         </div>
+
+         <div id="mist_check_right">
+            <input type="checkbox" id="check_1">
+            <label for="check_1">네오젠</label>
+
+            <input type="checkbox" id="check_2">
+            <label for="check_2">눅스</label>
+
+            <input type="checkbox" id="check_3">
+            <label for="check_3">닥터자르트</label>
+
+            <input type="checkbox" id="check_4">
+            <label for="check_4">디오디너리</label>
+
+            <input type="checkbox" id="check_5">
+            <label for="check_5">라네즈</label>
+
+            <input type="checkbox" id="check_6">
+            <label for="check_6">라운드랩</label>
+
+            <input type="checkbox" id="check_7">
+            <label for="check_7">마녀공장</label>
+
+            <input type="checkbox" id="check_8">
+            <label for="check_8">바이오힐보</label>
+
+            <input type="checkbox" id="check_9">
+            <label for="check_9">세렌디뷰티</label>
+
+            <input type="checkbox" id="check_10">
+            <label for="check_10">아로마티카</label>
+
+            <input type="checkbox" id="check_11">
+            <label for="check_11">에스쁘아</label>
+
+            <input type="checkbox" id="check_12">
+            <label for="check_12">차앤박</label>
+
+            <input type="checkbox" id="check_13">
+            <label for="check_13">크리니크</label>
+
+            <input type="checkbox" id="check_14">
+            <label for="check_14">피지오겔</label>
+
+            <input type="checkbox" id="check_15">
+            <label for="check_15">RMK</label>
+         </div>
+      </div>
+
+      <br>
+      <br>
+
+      <div id="mist_align">
+         <button type="button">인기순</button>
+         <button type="button">최근 등록순</button>
+         <button type="button">판매 수량순</button>
+         <button type="button">낮은 가격순</button>
+         <button type="button">높은 가격순</button>
+      </div>
+
+      <br>
+      <br>
+
+      <div id="mist_item_all">
+         <ul>
+            <li class="mist neo"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0013/A00000013843303ko.jpg?l=ko">
+                  <p class="brand">네오젠</p>
+                  <p class="des">네오젠 올 데이 락킹 픽서 80ml (#메이크업픽서#피부진정)</p>
+                  <p class="price">9,000</p>
+               </a>
+            </li>
+
+            <li class="oil nuxe"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0001/A00000001365146ko.jpg?l=ko">
+                  <p class="brand">눅스</p>
+                  <p class="des">눅스 윌 프로디쥬스 멀티 드라이 오일 100ml 기획</p>
+                  <p class="price">49,000</p>
+               </a>
+            </li>
+
+            <li class="oil nuxe"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0011/A00000011800831ko.jpg?l=ko">
+                  <p class="brand">눅스</p>
+                  <p class="des">눅스 윌 프로디쥬스 멀티 리치 오일 100ml 기획</p>
+                  <p class="price">49,500</p>
+               </a>
+            </li>
+
+            <li class="mist drjart"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0011/A00000011550002ko.jpg?l=ko">
+                  <p class="brand">닥터자르트</p>
+                  <p class="des">닥터자르트 시카페어 페이셜 카밍 미스트 150ml</p>
+                  <p class="price">19,000</p>
+               </a>
+            </li>
+
+            <li class="oil drjart"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0010/A00000010760102ko.jpg?l=ko">
+                  <p class="brand">닥터자르트</p>
+                  <p class="des">닥터자르트 NEW 세라마이딘 오일 밤 기획</p>
+                  <p class="price">23,200</p>
+               </a>
+            </li>
+
+            <li class="oil ordi" id="best_8"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0014/A00000014131402ko.jpg?l=ko">
+                  <p class="brand">디오디너리</p>
+                  <p class="des">디오디너리 100%플랜트-디라이브드 스쿠알란</p>
+                  <p class="price">10,700</p>
+               </a>
+            </li>
+
+            <li class="oil ordi"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0014/A00000014132802ko.jpg?l=ko">
+                  <p class="brand">디오디너리</p>
+                  <p class="des">디오디너리 100% 오가닉 콜드-프레스드 로즈 힙 씨드 오일</p>
+                  <p class="price">12,100</p>
+               </a>
+            </li>
+
+            <li class="mist laneige" id="best_9"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0014/A00000014747706ko.jpg?l=ko">
+                  <p class="brand">라네즈</p>
+                  <p class="des">라네즈 크림스킨 미스트 120ml</p>
+                  <p class="price">13,700</p>
+               </a>
+            </li>
+
+            <li class="mist round" id="best_10"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0015/A00000015044705ko.jpg?l=ko">
+                  <p class="brand">라운드랩</p>
+                  <p class="des">라운드랩 1025 독도 미스트 150ml</p>
+                  <p class="price">12,600</p>
+               </a>
+            </li>
+
+            <li class="mist manyo"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0015/A00000015228002ko.jpg?l=ko">
+                  <p class="brand">마녀공장</p>
+                  <p class="des">마녀공장 비피다 앰플 영양 미스트 120ml (안개분사형)</p>
+                  <p class="price">22,000</p>
+               </a>
+            </li>
+
+            <li class="mist bio"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0014/A00000014797905ko.jpg?l=ko">
+                  <p class="brand">바이오힐보</p>
+                  <p class="des">바이오힐보 판테놀시카 배리어 크림미스트 120ml</p>
+                  <p class="price">17,000</p>
+               </a>
+            </li>
+
+            <li class="mist bio" id="best_11"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0016/A00000016143704ko.jpg?l=ko">
+                  <p class="brand">바이오힐보</p>
+                  <p class="des">바이오힐보 판테놀시카90 블레미쉬 진정미스트 80ml</p>
+                  <p class="price">7,800</p>
+               </a>
+            </li>
+
+            <li class="mist serendi" id="best_12"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0015/A00000015773701ko.jpg?l=ko">
+                  <p class="brand">세렌디뷰티</p>
+                  <p class="des">세렌디뷰티 씨워터 알게 세럼 미스트 75ml(온)</p>
+                  <p class="price">16,800</p>
+               </a>
+            </li>
+
+            <li class="oil aroma" id="best_13"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0010/A00000010564608ko.jpg?l=ko">
+                  <p class="brand">아로마티카</p>
+                  <p class="des">아로마티카 티트리 그린 오일 30ml</p>
+                  <p class="price">17,500</p>
+               </a>
+            </li>
+
+            <li class="oil aroma"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0001/A00000001538007ko.jpg?l=ko">
+                  <p class="brand">아로마티카</p>
+                  <p class="des">아로마티카 유기농 네롤리 브라이트닝 페이셜 오일 30ml</p>
+                  <p class="price">17,500</p>
+               </a>
+            </li>
+
+            <li class="mist espoir"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0012/A00000012802901ko.jpg?l=ko">
+                  <p class="brand">에스쁘아</p>
+                  <p class="des">에스쁘아 오일 컷 픽서</p>
+                  <p class="price">19,000</p>
+               </a>
+            </li>
+
+            <li class="mist cnp"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0015/A00000015482101ko.jpg?l=ko">
+                  <p class="brand">차앤박</p>
+                  <p class="des">차앤박 뮤제너 카밍 앰플 미스트 100ml</p>
+                  <p class="price">9,900</p>
+               </a>
+            </li>
+
+            <li class="mist cnp"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0015/A00000015481901ko.jpg?l=ko">
+                  <p class="brand">차앤박</p>
+                  <p class="des">차앤박 프로폴리스 에너지 앰플 미스트 100ml</p>
+                  <p class="price">15,000</p>
+               </a>
+            </li>
+
+            <li class="mist cnp"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0001/A00000001713001ko.jpg?l=ko">
+                  <p class="brand">차앤박</p>
+                  <p class="des">차앤박 퀵 프레쉬 비타 앰플 미스트 100ml</p>
+                  <p class="price">15,000</p>
+               </a>
+            </li>
+
+            <li class="mist clini"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0010/A00000010415901ko.jpg?l=ko">
+                  <p class="brand">크리니크</p>
+                  <p class="des">크리니크 모이스춰 써지 페이스 스프레이 125ml</p>
+                  <p class="price">28,000</p>
+               </a>
+            </li>
+
+            <li class="mist physi"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0014/A00000014890001ko.jpg?l=ko">
+                  <p class="brand">피지오겔</p>
+                  <p class="des">피지오겔 DMT 페이셜 미스트 100ml</p>
+                  <p class="price">24,500</p>
+               </a>
+            </li>
+
+            <li class="oil rmk"><a href=""><img
+                     src="https://image.oliveyoung.co.kr/uploads/images/goods/400/10/0000/0016/A00000016107401ko.jpg?l=ko">
+                  <p class="brand">RMK</p>
+                  <p class="des">RMK W 트리트먼트 오일 50ml<br>60ml+30ml</p>
+                  <p class="price">55,000</p>
+               </a>
+            </li>
+         </ul>
+      </div>
+   </div>
+
+   <br>
+   <br>
+   <br>
+
+   <!-- 사이드 바 -->
+   <div id="side_bar">
+      <ul>
+         <li><a href="beautyfoam.html#header_box"><i class="fa-brands fa-envira"></i>메인으로</a></li>
+         <li><a href="#header_box"><i class="fa-solid fa-circle-arrow-up"></i>Top</a></li>
+      </ul>
+   </div>
+
+   <!-- 푸터 -->
+   <footer>
+      <div id="footer_box">
+         <div id="footer_1">
+            <h3><i class="fa-brands fa-envira"></i>BEAUTYFO:AM</h3>
+            <p>(주)뷰티폼대표이사 : OOO </p>
+            <p>주소 : 부산 동구 XX로 123 (XX동, 행복빌딩)</p>
+            <p>사업자등록번호 : 123-45-67890 통신판매업 신고번호 : 부산 00000호</p>
+            <p>개인정보관리책임자 : OOO cpo@beautyfoam.com</p>
+            <p>COPYRIGHTS(C) 20XX BEAUTYFOAM ALL RIGHTS RESERVED.</p>
+         </div>
+
+         <div id="footer_2">
+            <ul id="footer_2_ul_1">
+               <li><a href="">뷰티폼 SNS</a></li>
+               <li><a href=""><i class="fa-brands fa-facebook"></i></a></li>
+               <li><a href=""><i class="fa-brands fa-instagram"></i></a></li>
+               <li><a href=""><i class="fa-brands fa-twitter"></i></a></li>
+               <li><a href=""><i class="fa-brands fa-youtube"></i></a></li>
+            </ul>
+
+            <ul id="footer_2_ul_2">
+               <li><i class="fa-solid fa-headphones"></i> 고객센터</li>
+               <li>000-000-0000 <br>월~금요일<br>(공휴일 제외)<br> 09:00 ~ 18:00</li>
+            </ul>
+         </div>
+      </div>
+
+      <div id="footer_3">
+         <ul>
+            <li><a href="#">이용약관</a></li>
+            <li><a href="#">개인정보처리방침</a></li>
+            <li><a href="#">가맹점 문의</a></li>
+            <li><a href="#">제휴 문의</a></li>
+            <li><a href="#">신규 입점 문의</a></li>
+            <li><a href="#">본사 정품 판매처</a></li>
+         </ul>
+      </div>
+   </footer>
+
+   <!-- 제이쿼리 -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+   
+   <script src="beautyfoam_common.js"></script>
+   <script src="beautyfoam_mist.js"></script>
+</body>
+
+</html>
