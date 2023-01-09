@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>파노라마(기능구현)</title>
+
+   <!-- 파비콘 -->
+   <link rel="icon" type="image/png" sizes="192x192" href="panoimg/favicon.png">
+
+   <!-- 폰트어썸 -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link
+      href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Dancing+Script:wght@700&family=Lobster&family=Roboto:wght@100&family=Rubik+Iso&family=Rubik+Maze&display=swap"
+      rel="stylesheet">
+
+   <style>
+      /* 초기화 */
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+      }
+
+      ol,
+      ul {
+         list-style: none;
+      }
+
+      a {
+         outline: 0;
+
+         /* 밑줄 제거 */
+         text-decoration: none;
+      }
+
+      img {
+         border: 0;
+      }
+
+      button {
+         background-color: transparent;
+         border: none;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+         -webkit-appearance: none;
+         margin: 0;
+      }
+
+      body {
+         background: black;
+         /* 자간 */
+         letter-spacing: 1px;
+      }
+
+      /* 좌우 흐림 효과 */
+      .blur {
+         width: 480px;
+         height: 100%;
+         position: absolute;
+         top: 0px;
+         z-index: 10;
+         background: linear-gradient(to right,
+               rgba(0, 0, 0, 1) 0%,
+               rgba(0, 0, 0, 1) 25%,
+               rgba(0, 0, 0, 0.7) 50%,
+               rgba(0, 0, 0, 0.7) 75%,
+               rgba(0, 0, 0, 0.1) 100%);
+      }
+
+      .blur2 {
+         width: 480px;
+         height: 100%;
+         position: absolute;
+         top: 0px;
+         right: 0;
+         z-index: 10;
+         background: linear-gradient(to left,
+               rgba(0, 0, 0, 1) 10%,
+               rgba(0, 0, 0, 1) 25%,
+               rgba(0, 0, 0, 0.7) 50%,
+               rgba(0, 0, 0, 0.7) 75%,
+               rgba(0, 0, 0, 0.1) 100%);
+      }
+
+      .main {
+         position: relative;
+         width: 500px;
+         height: 400px;
+         margin: 100px auto;
+         perspective: 3000px;
+      }
+
+      /* 파노라마 타이틀 */
+      .pano_title {
+         font-size: 30px;
+         text-align: center;
+         margin-top: -50px;
+         font-family: 'Rubik Iso', cursive;
+
+         /* 네온사인 효과 */
+         color: white;
+         text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
+            0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa, 0 0 151px #0fa;
+
+         animation: flicker 1.5s infinite alternate;
+      }
+
+      @keyframes flicker {
+
+         0%,
+         18%,
+         22%,
+         25%,
+         53%,
+         57%,
+         100% {
+            text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #0fa,
+               0 0 80px #0fa, 0 0 90px #0fa, 0 0 100px #0fa, 0 0 150px #0fa;
+         }
+
+         20%,
+         24%,
+         55% {
+            text-shadow: none;
+         }
+      }
+
+      /* 요소 박스 */
+      .panorama {
+         margin-top: 150px;
+         width: 100%;
+         height: 100%;
+         position: absolute;
+         transform: translateZ(-300px);
+         transform-style: preserve-3d;
+         transition: transform 0.5s;
+      }
+
+      .pano_item:hover {
+         text-shadow: 1px 1px 3px aqua;
+      }
+
+      /* 소개 ~ 스케줄러 */
+      .pano_item {
+         position: absolute;
+         width: 800px;
+         height: 430px;
+         font-weight: bold;
+         padding: 25px;
+         border: 1px solid rgba(255, 255, 255, 0.3);
+         transition: all 0.4s cubic-bezier(.5, .24, 0, 1);
+         color: white;
+         margin-left: -150px;
+
+         /* 바닥 반사 */
+         -webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.3)), color-stop(0.5, transparent));
+
+         /* 회전 요소들의 뒷면 안 보이게 설정 */
+         backface-visibility: hidden;
+      }
+
+      .pano_item::before {
+         content: '';
+         position: absolute;
+         left: 0px;
+         bottom: 0px;
+         z-index: -1;
+         width: 0%;
+         height: 1px;
+         background: aqua;
+         display: block;
+         transition: all 0.3s cubic-bezier(0.5, 0.5, 0.5, 0.5);
+      }
+
+      .pano_item:hover::before {
+         width: 100%;
+      }
+
+      .pano_item::after {
+         content: '';
+         position: absolute;
+         right: 0px;
+         top: 0px;
+         z-index: -1;
+         width: 0%;
+         height: 1px;
+         background: aqua;
+         transition: all 0.3s cubic-bezier(0.5, 0.5, 0.5, 0.5)
+      }
+
+      .pano_item:hover::after {
+         width: 100%;
+      }
+
+      .pano_item:hover {
+         border: none;
+         border-left: 1px solid aqua;
+         border-right: 1px solid aqua;
+      }
+
+      /* 요소들 제목 (INTRODUCE ~) */
+      .pano_item h1 {
+         position: absolute;
+         font-size: 30px;
+         opacity: 0;
+         transition: all 0.5s;
+         letter-spacing: 3px;
+
+         /* top과 left를 설정 안 하면 hover가 부자연스럽다 */
+         top: 0px;
+         left: 0px;
+      }
+
+      /* introduce ~ scheduler */
+      .pano_item:hover h1 {
+         top: -50px;
+         opacity: 1;
+         color: white;
+
+         /* 수평, 수직, 흐림 */
+         text-shadow: 0px 0px 5px aqua;
+      }
+
+      .pano_item:hover .inner {
+         display: block;
+      }
+
+      .pano_item:hover img {
+         display: none;
+      }
+
+      .inner {
+         position: absolute;
+         top: 20%;
+         left: 5%;
+         color: #fff;
+         z-index: 20;
+         font-weight: 600;
+         font-size: 20px;
+         display: none;
+      }
+
+      .inner a {
+         display: inline-block;
+         padding: 10px;
+         border: 1px solid aqua;
+         border-radius: 5px;
+         margin-right: 50px;
+         margin-top: 30px;
+         cursor: pointer;
+      }
+
+      .inner a:hover {
+         border: 3px solid aqua;
+         padding: 10px 30px;
+      }
+
+      /* 요소들 소제목 (간략한 소개 멘트 ~) */
+      .pano_item h3 {
+         margin-top: 50px;
+      }
+
+      /* 요소들 내용 */
+      .pano_item p {
+         margin-top: 20px;
+      }
+
+      /* 요소들 이미지 */
+      /* 800 x 400 */
+      .pano_item img {
+         width: 100%;
+      }
+
+      /* 다음, 이전 버튼 */
+      .pano_btn {
+         width: 60%;
+         margin: 0 auto;
+         display: flex;
+         justify-content: space-between;
+         margin-top: -100px;
+      }
+
+      .pano_btn>button {
+         font-size: 100px;
+         cursor: pointer;
+         opacity: 0.3;
+         z-index: 100;
+      }
+
+      .pano_btn>button:hover {
+         opacity: 0.5;
+      }
+
+      i {
+         color: white;
+      }
+
+      /* 3D 효과 */
+      .pano_item:nth-child(1) {
+         transform: rotateY(0deg) translateZ(700px);
+      }
+
+      .pano_item:nth-child(2) {
+         transform: rotateY(72deg) translateZ(700px);
+      }
+
+      .pano_item:nth-child(3) {
+         transform: rotateY(144deg) translateZ(700px);
+      }
+
+      .pano_item:nth-child(4) {
+         transform: rotateY(216deg) translateZ(700px);
+      }
+
+      .pano_item:nth-child(5) {
+         transform: rotateY(288deg) translateZ(700px);
+      }
+   </style>
+</head>
+
+<body>
+   <!-- 좌우 흐림 효과 -->
+   <div class="blur"></div>
+   <div class="blur2"></div>
+
+   <!-- 전체 박스 -->
+   <div class="main">
+
+      <!-- 파노라마 타이틀 -->
+      <div class="pano_title">
+         <p>PORTFOLIO 2023<br>
+            PANORAMA
+         </p>
+      </div>
+
+      <!-- 요소 박스 -->
+      <div class="panorama">
+
+         <!-- 사계절 -->
+         <div class="pano_item">
+            <div class="item_1">
+               <h1>SEASON</h1>
+               <img src="panoimg/season.png">
+
+               <div class="inner">
+                  <div>
+                     <h2>1. 사계절</h2>
+                     <h3>계절의 변화를 느껴보세요.</h3>
+                     <p>벚꽃, 비, 낙엽, 눈으로 사계절의 변화를 느껴볼 수 있습니다.</p>
+                     <a onclick="season_modal()">바로가기</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- 게임 -->
+         <div class="pano_item">
+            <div class="item_2">
+               <h1>GAMES</h1>
+               <img src="panoimg/game.png">
+
+               <div class="inner">
+                  <div>
+                     <h2>2. 게임</h2>
+                     <h3>게임을 플레이 해 보세요.</h3>
+                     <p>아래의 세 가지 게임 중 원하는 게임을 플레이할 수 있습니다.</p>
+                     <a onclick="tetris_modal()">테트리스</a>
+                     <a onclick="puzzle_modal()">이미지 퍼즐</a>
+                     <a onclick="card_modal()">같은 색상 찾기</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- 환율 -->
+         <div class="pano_item">
+            <div class="item_3">
+               <h1>EXCHANGE RATE</h1>
+               <img src="panoimg/ex.png">
+               <div class="inner">
+                  <div>
+                     <h2>3. 환율</h2>
+                     <h3>환율을 확인해 보세요.</h3>
+                     <p>달러, 원화, 위안, 엔 중 원하는 금액을 입력하여 환율을 확인할 수 있습니다.<br><br>
+                        <small style="font-size:10px; float:right">(본 환율은 2022년 8월을 기준으로 합니다.)</small>
+                     </p>
+                     <a onclick="ex_modal()">바로가기</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- 그림판 -->
+         <div class="pano_item">
+            <div class="item_4">
+               <h1>DRAWING BOARD</h1>
+               <img src="panoimg/draw.PNG">
+               <div class="inner">
+                  <div>
+                     <h2>4. 그림판</h2>
+                     <h3>그림을 그려 보세요.</h3>
+                     <p>마우스를 이용하여 원하는 대로 그림을 그릴 수 있습니다.</p>
+                     <a onclick="drawing_modal()">바로가기</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- 계산기 -->
+         <div class="pano_item">
+            <div class="item_5">
+               <h1>CALCULATOR</h1>
+               <img src="panoimg/cal.PNG">
+               <div class="inner">
+                  <div>
+                     <h2>5. 계산기</h2>
+                     <h3>간단한 계산을 해 보세요.</h3>
+                     <p>계산기를 이용하여 간단한 사칙연산을 할 수 있습니다.</p>
+                     <a onclick="calculator_modal()">바로가기</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- 다음, 이전 버튼  -->
+   <div class="pano_btn">
+      <button class="pano_left"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="pano_right"><i class="fa-solid fa-chevron-right"></i></button>
+   </div>
+
+   <script>
+      var carousel = document.querySelector('.panorama');
+      var cellCount = 5;
+      var selectedIndex = 0;
+
+      // 메인 화면 회전
+      function rotateCarousel() {
+         var angle = selectedIndex / cellCount * -360;
+         carousel.style.transform = 'translateZ(-300px) rotateY(' + angle + 'deg)';
+      }
+
+      var prevButton = document.querySelector('.pano_left');
+      prevButton.addEventListener('click', function () {
+         selectedIndex--;
+         rotateCarousel();
+      });
+
+      var nextButton = document.querySelector('.pano_right');
+      nextButton.addEventListener('click', function () {
+         selectedIndex++;
+         rotateCarousel();
+      });
+
+      // 전체 박스
+      var main = document.querySelector('.main');
+
+      // 다음, 이전 버튼
+      var pano_btn = document.querySelector('.pano_btn');
+      var pano_left = document.querySelector('.pano_left');
+      var pano_right = document.querySelector('.pano_right');
+
+      // 1. 사계절 
+      function season_modal() {
+         location.href = "./panorama_season.html";
+      }
+
+      // 2. 게임 
+      function tetris_modal() {
+         location.href = "./panorama_tetris.html";
+      }
+
+      function puzzle_modal() {
+         location.href = "./panorama_puzzle.html";
+      }
+
+      function card_modal() {
+         location.href = "./panorama_card.html";
+      }
+
+      // 3. 환율
+      function ex_modal() {
+         location.href = "./panorama_ex.html";
+      }
+
+      // 4. 그림판
+      function drawing_modal() {
+         location.href = "./panorama_drawing.html";
+      }
+
+      // 5. 계산기
+      function calculator_modal() {
+         location.href = "./panorama_calculator.html";
+      }
+
+   </script>
+</body>
+
+</html>
